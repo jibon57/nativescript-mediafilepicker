@@ -4,8 +4,8 @@
 # nativescript-mediafilepicker
 This plugin will allow user to pick video & image files from their device. User can also use their camera to take picture from this plugin directly. It's a combination features of [nativescript-imagepicker](https://github.com/NativeScript/nativescript-imagepicker) and [nativescript-camera](https://github.com/NativeScript/nativescript-camera/) plugin with some extended features using following libaries:
 
-* iOS: [Android-FilePicker](https://github.com/DroidNinja/Android-FilePicker)
-* Android: [GMImagePicker](https://github.com/TechSmith/GMImagePicker)
+* Android: [Android-FilePicker](https://github.com/DroidNinja/Android-FilePicker)
+* iOS: [GMImagePicker](https://github.com/TechSmith/GMImagePicker)
 
 **Note for iOS:** In iOS you can't use file's link directly from the picker because of the permission issue. For resolving this issue this plugin will copy the selected files in your app's document directory under a new folder `filepicker`. So, after using that file you can delete that file to reduce memory use. You can check the demo app.
 
