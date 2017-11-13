@@ -1,7 +1,7 @@
 {
   "name": "nativescript-mediafilepicker",
   "version": "1.0.0",
-  "description": "NativeScript Media File Picker Plugin",
+  "description": "NativeScript Media File Picker Plugin.",
   "main": "mediafilepicker",
   "typings": "index.d.ts",
   "nativescript": {
@@ -30,11 +30,12 @@
     "NativeScript",
     "JavaScript",
     "Android",
-    "iOS"
+    "iOS",
+	"mediafilepicker"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "youremail@yourdomain.com"
+    "name": "Jibon L. Costa",
+    "email": "jiboncosta57@gmail.com"
   },
   "bugs": {
     "url": "https://github.com/jibon57/nativescript-mediafilepicker/issues"
