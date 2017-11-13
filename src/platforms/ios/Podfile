@@ -1,0 +1,1 @@
+pod 'GMImagePicker', :git=>"https://github.com/TechSmith/GMImagePicker"

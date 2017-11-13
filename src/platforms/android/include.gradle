@@ -1,0 +1,20 @@
+/* Include.gradle configuration: http://docs.nativescript.org/plugins/plugins#includegradle-specification */
+
+android {
+	productFlavors {
+		"nativescript-mediafilepicker" {
+			dimension "nativescript-mediafilepicker"
+		}
+	}
+}
+
+repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+}
+
+dependencies {
+	compile 'com.droidninja:filepicker:2.0.8'
+}
