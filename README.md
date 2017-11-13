@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/dt/nativescript-mediafilepicker.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-mediafilepicker)
 
 # nativescript-mediafilepicker
-This plugin will allow user to pick video & image files from their device. User can also use their camera to take picture from this plugin directly. It's combination features nativescript-imagepicker and nativescript-camera plugin with some extended features using following libaries:
+This plugin will allow user to pick video & image files from their device. User can also use their camera to take picture from this plugin directly. It's a combination features of [nativescript-imagepicker](https://github.com/NativeScript/nativescript-imagepicker) and [nativescript-camera](https://github.com/NativeScript/nativescript-camera/) plugin with some extended features using following libaries:
 
 * iOS: [Android-FilePicker](https://github.com/DroidNinja/Android-FilePicker)
 * Android: [GMImagePicker](https://github.com/TechSmith/GMImagePicker)
