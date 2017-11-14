@@ -16,5 +16,5 @@ repositories {
 }
 
 dependencies {
-	compile 'com.droidninja:filepicker:2.0.8'
+	compile 'com.droidninja:filepicker:2.1.0'
 }

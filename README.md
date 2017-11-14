@@ -28,7 +28,8 @@ tns plugin add nativescript-mediafilepicker
 
 ```javascript
     import { Mediafilepicker, MediaFilepickerOptions } from 'nativescript-mediafilepicker';
-   
+    private mediafilepicker;
+    
     let options: MediaFilepickerOptions = {
       android: {
         mxcount: 2,
@@ -94,11 +95,11 @@ tns plugin add nativescript-mediafilepicker
     setActivityTheme: string; //used to set theme for toolbar (must be an actionbar theme)
     enableImagePicker: boolean; //added option to disable image picker
     enableVideoPicker: boolean; //added video picker alongside images
-    enableDocSupport: boolean; //If you want to enable/disable default document picker, use this method. (Enabled by default)
+    enableDocSupport: boolean; //If you want to enable/disable default document picker, use this. (Enabled by default)
     enableCameraSupport: boolean; //to show camera in the picker (Enabled by default)
     showGifs: boolean; //to show gifs images in the picker
     pickFile: boolean; // if you want for file picker 
-    addFileSupport: { //If you want to specify custom file type, use this method. (example below)
+    addFileSupport: { //If you want to specify custom file type, use this. (example below)
       title: string;
       type: any;
       icon: string;
