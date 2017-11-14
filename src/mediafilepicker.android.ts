@@ -37,7 +37,7 @@ export class Mediafilepicker extends Common implements CommonFilePicker {
             builder.addFileSupport(options.addFileSupport.title, options.addFileSupport.type, options.addFileSupport.icon);
         }
 
-        permissions.requestPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, "Need these permissions to access files")
+        permissions.requestPermission([android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE], "Need these permissions to access files")
             .then(function () {
                 if (options.pickFile) {
                     builder.pickFile(activity);
