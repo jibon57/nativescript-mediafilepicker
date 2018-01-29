@@ -104,15 +104,6 @@ export class Mediafilepicker extends Common implements CommonFilePicker {
                         })
                     }
                     break;
-
-                default:
-
-                    t.notify({
-                        eventName: "error",
-                        object: t,
-                        msg: "got error"
-                    })
-                    break;
             }
         }
     }
