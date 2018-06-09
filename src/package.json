@@ -1,6 +1,6 @@
 {
   "name": "nativescript-mediafilepicker",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "NativeScript Media File Picker Plugin.",
   "main": "mediafilepicker",
   "typings": "index.d.ts",
@@ -31,7 +31,7 @@
     "JavaScript",
     "Android",
     "iOS",
-	"mediafilepicker"
+    "mediafilepicker"
   ],
   "author": {
     "name": "Jibon L. Costa",

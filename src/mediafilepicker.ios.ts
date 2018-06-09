@@ -193,7 +193,7 @@ export class Mediafilepicker extends Common implements CommonFilePicker {
 
                 return new Promise(function (resolve, reject) {
 
-                        let docuPath = fs.knownFolders.documents(); 
+                        let docuPath = fs.knownFolders.documents();
 
                         let targetURL = NSURL.fileURLWithPath(docuPath.path + "/filepicker/" + fileName);
 

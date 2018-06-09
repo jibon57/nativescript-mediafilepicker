@@ -22,14 +22,14 @@ export class HelloWorldModel extends Observable {
         enableCameraSupport: true,
       },
       ios: {
-        allowsMultipleSelection: true,
+        allowsMultipleSelection: false,
         title: "Album",
         showCameraButton: true,
       }
     };
     this.mediafilepicker = new Mediafilepicker();
     this.mediafilepicker.on("getFiles", function (res: any) {
- 
+
       let files = res.files;
 
       if (files.length > 0) {
@@ -58,7 +58,7 @@ export class HelloWorldModel extends Observable {
             }
           }
         });
-      }else{
+      } else {
         console.log("There was some problem to select the file. Looks like user has cancel it.")
       }
 
