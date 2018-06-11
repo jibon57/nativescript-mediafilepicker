@@ -1,6 +1,6 @@
 import { Common, CommonFilePicker, MediaFilepickerOptions } from './mediafilepicker.common';
 import * as app from 'tns-core-modules/application/application';
-import { android as Android, AndroidApplication, AndroidActivityResultEventData } from "tns-core-modules/application/application";
+
 var permissions = require('nativescript-permissions');
 declare var android, droidninja;
 
@@ -56,11 +56,12 @@ export class Mediafilepicker extends Common implements CommonFilePicker {
                 })
             });
 
-        Android.on(AndroidApplication.activityResultEvent, function (args: AndroidActivityResultEventData) {
+        app.android.on(app.AndroidApplication.activityResultEvent, onResult);
 
-            t.handleResult(args.requestCode, args.resultCode, args.intent);
-        });
-
+        function onResult(args){
+            app.android.off(app.AndroidApplication.activityResultEvent, onResult);
+            t.handleResult(args.requestCode, args.resultCode, args.intent);  
+        }
 
     }
 

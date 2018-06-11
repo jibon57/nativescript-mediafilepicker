@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.wxml": "html",
+        "*.wxss": "css"
+    },
+	"files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "hooks": true,
+        ".vscode": true
+    },
+    "editor.wordWrap": "on",
+    "editor.formatOnSave": true
+}
