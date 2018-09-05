@@ -25,7 +25,7 @@ sudo find my_dir/my_project -type d -exec chmod 777 {} \;
 * Multiple or single selection
 * Camera support for taking picture
 * File picker (Only for Android)
-* Custom file type (Only for Android)
+* Custom file type (Only for Android) 
 
 ## Installation
 
