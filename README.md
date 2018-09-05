@@ -107,12 +107,12 @@ let MediaFilepickerOptions = {
         enableImagePicker: true,
         enableVideoPicker: true,
         enableCameraSupport: true,
-        pickFile: true,  
+        /* pickFile: true,  
         addFileSupport: {
             title: "File",
             type: [".zip", ".rar", ".ZIP", ".pdf", ".doc", ".docx" ],
             icon: android.R.drawable.ic_dialog_info
-        }
+        } */
     },
     ios: {
         allowsMultipleSelection: true,
