@@ -9,6 +9,15 @@ This plugin will allow user to pick video & image files from their device. User 
 
 **Note for iOS:** In iOS you can't use file's link directly from the picker because of the permission issue. For resolving this issue this plugin will copy the selected files in your app's document directory under a new folder `filepicker`. So, after using that file you can delete that file to reduce memory use. You can check the demo app.
 
+**Note for User Linux:** Before adding this plugin, make sure your permissions are open, at 755 or 777. Run this command to change the permissions of all directories in your project :
+
+```
+sudo find my_dir/my_project -type d -exec chmod 755 {} \;
+```
+Or
+```
+sudo find my_dir/my_project -type d -exec chmod 777 {} \;
+```
 
 **Features:**
 
@@ -88,6 +97,7 @@ tns plugin add nativescript-mediafilepicker
 
 ### In JS
 ```javascript
+const fs = require('file-system');
 const MF = require("nativescript-mediafilepicker");
 var mediafilepicker = new MF.Mediafilepicker();
 
