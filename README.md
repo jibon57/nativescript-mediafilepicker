@@ -25,7 +25,7 @@ tns plugin add nativescript-mediafilepicker
 ```
 
 ## Usage 
-
+### In TS
 ```javascript
     import { Mediafilepicker, MediaFilepickerOptions } from 'nativescript-mediafilepicker';
     private mediafilepicker;
@@ -84,6 +84,74 @@ tns plugin add nativescript-mediafilepicker
         console.log(res.msg)
     })
     this.mediafilepicker.startFilePicker(options);
+```
+
+### In JS
+```javascript
+const MF = require("nativescript-mediafilepicker");
+var mediafilepicker = new MF.Mediafilepicker();
+
+let MediaFilepickerOptions = {
+    android: {
+        mxcount: 2,
+        enableImagePicker: true,
+        enableVideoPicker: true,
+        enableCameraSupport: true,
+        pickFile: true,  
+        addFileSupport: {
+            title: "File",
+            type: [".zip", ".rar", ".ZIP", ".pdf", ".doc", ".docx" ],
+            icon: android.R.drawable.ic_dialog_info
+        }
+    },
+    ios: {
+        allowsMultipleSelection: true,
+        title: "Album",
+        showCameraButton: true,
+    }
+};
+
+
+mediafilepicker.on("getFiles", function (res) {
+
+    let files = res.files;
+
+    if (files.length > 0) {
+
+        files = files.split(",");
+
+        files.forEach(file => {
+
+            let fileName = file.replace(/^.*[\/]/, '');
+
+            console.log(file);
+            console.log(fileName);
+
+            // you can do anything here
+
+
+            if (app.ios) {
+
+                let folder = fs.knownFolders.documents();
+                let file = folder.getFolder("filepicker").getFile(fileName);
+
+                if (fs.File.exists(file.path)) {
+                    folder.getFile("filepicker/" + fileName).remove()
+                } else {
+                    console.log("not found")
+                }
+            }
+        });
+    } else {
+        console.log("There was some problem to select the file. Looks like user has cancel it.")
+    }
+
+})
+mediafilepicker.on("error", function (res) {
+    console.log(res.msg)
+})
+mediafilepicker.startFilePicker(MediaFilepickerOptions);
+
 ```
 
 ## All options
