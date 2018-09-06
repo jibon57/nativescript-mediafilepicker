@@ -1,9 +1,9 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
 import * as app from 'tns-core-modules/application';
-var permissions = require('nativescript-permissions');
+const permissions = require('nativescript-permissions');
 
-declare var com, java, android;
+declare const com, java, android;
 
 const AudioPickActivity = com.vincent.filepicker.activity.AudioPickActivity;
 const ImagePickActivity = com.vincent.filepicker.activity.ImagePickActivity;
