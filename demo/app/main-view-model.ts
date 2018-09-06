@@ -20,7 +20,7 @@ export class HelloWorldModel extends Observable {
         maxNumberFiles: 10,
         isNeedFolderList: true
       }
-    }
+    };
     this.mediafilepicker.openImagePicker(options);
 
     this.mediafilepicker.on("getFiles", function (res) {
@@ -35,12 +35,12 @@ export class HelloWorldModel extends Observable {
 
         }
       }
-    })
+    });
 
     this.mediafilepicker.on("error", function (res) {
       let msg = res.object.get('msg');
       console.log(msg);
-    })
+    });
   }
 
   /**
@@ -54,7 +54,7 @@ export class HelloWorldModel extends Observable {
         maxNumberFiles: 2,
         isNeedFolderList: true
       }
-    }
+    };
     this.mediafilepicker.openVideoPicker(options);
 
     this.mediafilepicker.on("getFiles", function (res) {
@@ -71,7 +71,7 @@ export class HelloWorldModel extends Observable {
         }
       }
 
-    })
+    });
   }
 
   /**
@@ -85,7 +85,7 @@ export class HelloWorldModel extends Observable {
         maxNumberFiles: 2,
         isNeedFolderList: true
       }
-    }
+    };
     this.mediafilepicker.openAudioPicker(options);
 
     this.mediafilepicker.on("getFiles", function (res) {
@@ -102,7 +102,7 @@ export class HelloWorldModel extends Observable {
         }
       }
 
-    })
+    });
   }
 
   /**
@@ -114,7 +114,7 @@ export class HelloWorldModel extends Observable {
         extensions: ['txt', 'pdf'],
         maxNumberFiles: 2
       }
-    }
+    };
 
     this.mediafilepicker.openFilePicker(options);
 
@@ -132,6 +132,6 @@ export class HelloWorldModel extends Observable {
         }
       }
 
-    })
+    });
   }
 }
