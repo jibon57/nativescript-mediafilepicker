@@ -1,0 +1,9 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
+  xmlns:ui="nativescript-mediafilepicker">
+  <StackLayout class="p-20">
+   <Button height="44" tap="{{openImagePicker}}" text="Open ImagePicker"></Button>
+   <Button height="44" tap="{{openVideoPicker}}" text="Open VideoPicker"></Button>
+   <Button height="44" tap="{{openAudioPicker}}" text="Open AudioPicker"></Button>
+   <Button height="44" tap="{{openCustomFilesPicker}}" text="Open CustomFilePicker"></Button>
+  </StackLayout>
+</Page>

@@ -2,9 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to camera</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to photo library</string>
+	<!--Describe the permissions, features or other configurations required by your plugin for iOS.-->
 </dict>
 </plist>

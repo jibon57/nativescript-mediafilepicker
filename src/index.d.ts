@@ -1,42 +1,41 @@
-import { Common } from './mediafilepicker.common';
-export declare class Mediafilepicker extends Common implements CommonFilePicker {
-  output: any;
-  startFilePicker(params: MediaFilepickerOptions): void;
+import { Observable } from 'tns-core-modules/data/observable';
+import { MediaPickerInterface } from "./mediafilepicker.common";
+export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
+    constructor();
+    openImagePicker(params: ImagePickerOptions): void;
+    openVideoPicker(params: VideoPickerOptions): void;
+    openAudioPicker(params: AudioPickerOptions): void;
+    openFilePicker(params: FilePickerOptions): void;
+    private callIntent(intent, pickerType);
+    private handleResults(requestCode, resultCode, data);
 }
-export interface CommonFilePicker {
-  output: any;
-  startFilePicker(params: MediaFilepickerOptions): any;
-}
-export interface MediaFilepickerOptions {
-  android?: {
-    mxcount?: number;
-    setSelectedFiles?: string;
-    setActivityTheme?: string;
-    enableImagePicker?: boolean;
-    enableVideoPicker?: boolean;
-    enableDocSupport?: boolean;
-    enableCameraSupport?: boolean;
-    showGifs?: boolean;
-    pickFile?: boolean;
-    addFileSupport?: {
-      title?: string;
-      type?: any;
-      icon?: string;
+
+export interface ImagePickerOptions {
+    android: {
+        isNeedCamera?: boolean;
+        maxNumberFiles?: Number;
+        isNeedFolderList?: boolean;
     };
-  };
-  ios?: {
-    displaySelectionInfoToolbar?: boolean;
-    displayAlbumsNumberOfAssets?: boolean;
-    title?: string;
-    mediaTypes?: string;
-    customNavigationBarPrompt?: string;
-    colsInPortrait?: number;
-    colsInLandscape?: number;
-    minimumInteritemSpacing?: number;
-    allowsMultipleSelection?: boolean;
-    confirmSingleSelection?: boolean;
-    confirmSingleSelectionPrompt?: string;
-    showCameraButton?: boolean;
-    autoSelectCameraImages?: boolean;
-  };
+}
+export interface VideoPickerOptions {
+    android: {
+        isNeedCamera?: boolean;
+        maxNumberFiles?: Number;
+        isNeedFolderList?: boolean;
+        maxDuration?: Number;
+    };
+}
+export interface AudioPickerOptions {
+    android: {
+        isNeedRecorder?: boolean;
+        maxNumberFiles?: Number;
+        isNeedFolderList?: boolean;
+        maxSize?: Number;
+    };
+}
+export interface FilePickerOptions {
+    android: {
+        extensions: Array<String>;
+        maxNumberFiles?: Number;
+    };
 }

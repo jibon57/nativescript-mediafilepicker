@@ -1,1 +1,0 @@
-pod 'GMImagePicker', git: 'https://github.com/codelathe/GMImagePicker.git', branch: 'master'

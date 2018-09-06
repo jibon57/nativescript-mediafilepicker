@@ -1,124 +1,253 @@
-import { Common, CommonFilePicker, MediaFilepickerOptions } from './mediafilepicker.common';
-import * as app from 'tns-core-modules/application/application';
-
+import { Observable } from 'tns-core-modules/data/observable';
+import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
+import * as app from 'tns-core-modules/application';
 var permissions = require('nativescript-permissions');
-declare var android, droidninja;
 
-const FilePickerBuilder = droidninja.filepicker.FilePickerBuilder;
-const FilePickerConst = droidninja.filepicker.FilePickerConst;
+declare var com, java, android;
 
-export class Mediafilepicker extends Common implements CommonFilePicker {
+const AudioPickActivity = com.vincent.filepicker.activity.AudioPickActivity;
+const ImagePickActivity = com.vincent.filepicker.activity.ImagePickActivity;
+const NormalFilePickActivity = com.vincent.filepicker.activity.NormalFilePickActivity;
+const VideoPickActivity = com.vincent.filepicker.activity.VideoPickActivity;
 
-    public output = "";
+const Constant = com.vincent.filepicker.Constant;
+const Intent = android.content.Intent;
 
-    public startFilePicker(params: MediaFilepickerOptions) {
+export class Mediafilepicker extends Observable implements MediaPickerInterface {
 
-        let activity = app.android.foregroundActivity || app.android.startActivity;
+    public results;
+    public msg;
+
+    constructor() {
+        super();
+    }
+
+    /**
+     * openImagePicker
+     */
+    public openImagePicker(params: ImagePickerOptions) {
+
+        let intent, pickerType, options = params.android;
+
+        intent = new Intent(app.android.foregroundActivity, ImagePickActivity.class);
+
+        options.isNeedCamera ? intent.putExtra("IsNeedCamera", true) : intent.putExtra("IsNeedCamera", false);
+
+        options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
+
+        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+
+        pickerType = Constant.REQUEST_CODE_PICK_IMAGE;
+
+        this.callIntent(intent, pickerType);
+    }
+
+    /**
+     * openVideoPicker
+     */
+    public openVideoPicker(params: VideoPickerOptions) {
+
+        let intent, pickerType, options = params.android;
+
+        intent = new Intent(app.android.foregroundActivity, VideoPickActivity.class);
+
+        options.isNeedCamera ? intent.putExtra("IsNeedCamera", true) : intent.putExtra("IsNeedCamera", false);
+
+        options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
+
+        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+
+
+        pickerType = Constant.REQUEST_CODE_PICK_VIDEO;
+
+        this.callIntent(intent, pickerType);
+    }
+
+    /**
+     * openAudioPicker
+     */
+    public openAudioPicker(params: AudioPickerOptions) {
+
+        let intent, pickerType, options = params.android;
+
+        intent = new Intent(app.android.foregroundActivity, AudioPickActivity.class);
+
+        options.isNeedRecorder ? intent.putExtra("IsNeedRecorder", true) : intent.putExtra("IsNeedRecorder", false);
+
+        options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
+
+        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+
+        pickerType = Constant.REQUEST_CODE_PICK_AUDIO;
+
+        this.callIntent(intent, pickerType);
+    }
+
+    /**
+     * openFilePicker
+     */
+    public openFilePicker(params: FilePickerOptions) {
+
+        let intent, pickerType, options = params.android, extensions;
+
+        if (options.extensions.length > 0) {
+
+            extensions = Array.create(java.lang.String, options.extensions.length);
+
+            for (let i = 0; i < options.extensions.length; i++) {
+                extensions[i] = options.extensions[i];
+            }
+        }
+
+        intent = new Intent(app.android.foregroundActivity, NormalFilePickActivity.class);
+
+        options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
+
+        intent.putExtra(NormalFilePickActivity.SUFFIX, extensions);
+        pickerType = Constant.REQUEST_CODE_PICK_FILE;
+
+        this.callIntent(intent, pickerType);
+
+    }
+
+    private callIntent(intent, pickerType) {
+
         let t = this;
-        let builder = FilePickerBuilder.getInstance();
 
-        let options = params.android;
-
-        options.enableImagePicker ? builder.enableImagePicker(true) : builder.enableImagePicker(false);
-        options.enableVideoPicker ? builder.enableVideoPicker(true) : builder.enableVideoPicker(false);
-        options.enableDocSupport ? builder.enableDocSupport(true) : builder.enableDocSupport(false);
-        options.enableCameraSupport ? builder.enableCameraSupport(true) : builder.enableCameraSupport(false);
-        options.showGifs ? builder.showGifs(true) : builder.showGifs(false);
-
-        if (options.mxcount) {
-            builder.setMaxCount(options.mxcount);
-        }
-        if (options.setSelectedFiles) {
-            builder.setSelectedFiles(options.setSelectedFiles)
-        }
-        if (options.setActivityTheme) {
-            builder.setActivityTheme(options.setActivityTheme);
-        }
-        if (options.addFileSupport) {
-            builder.addFileSupport(options.addFileSupport.title, options.addFileSupport.type, options.addFileSupport.icon);
-        }
-
-        permissions.requestPermission([android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE], "Need these permissions to access files")
+        permissions.requestPermission([android.Manifest.permission.CAMERA, android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE], "Need these permissions to access files")
             .then(function () {
-                if (options.pickFile) {
-                    builder.pickFile(activity);
-                } else {
-                    builder.pickPhoto(activity);
-                }
+                app.android.foregroundActivity.startActivityForResult(intent, pickerType);
             })
             .catch(function () {
-                alert("Need permission to access files!");
-
+                t.msg = "Permission Error!";
                 t.notify({
-                    eventName: "error",
-                    object: t,
-                    data: "Need permission to access files!"
+                    eventName: 'error',
+                    object: t
                 })
             });
 
         app.android.on(app.AndroidApplication.activityResultEvent, onResult);
 
-        function onResult(args){
+        function onResult(args) {
             app.android.off(app.AndroidApplication.activityResultEvent, onResult);
-            t.handleResult(args.requestCode, args.resultCode, args.intent);  
+            t.handleResults(args.requestCode, args.resultCode, args.intent);
         }
+
 
     }
 
     /**
-     * handleResult
+     * handleResults
      */
-    public handleResult(requestCode, resultCode, data) {
-
-        let t = this;
+    private handleResults(requestCode, resultCode, data) {
 
         let androidAcivity = android.app.Activity;
-        
+        let output = [];
+        let t = this;
+
         switch (requestCode) {
 
-            case FilePickerConst.REQUEST_CODE_PHOTO:
+            case Constant.REQUEST_CODE_PICK_IMAGE:
+                if (resultCode == androidAcivity.RESULT_OK) {
 
-                if (resultCode == androidAcivity.RESULT_OK && data != null) {
+                    let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_IMAGE);
 
-                    let photoPaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
-                    photoPaths = photoPaths.toString();
-                    photoPaths = photoPaths.replace(/[\[\]']+/g, "");
-                    photoPaths = photoPaths.split(",");
+                    list = list.toArray();
 
-                    photoPaths.forEach(val => {
-                        let newVal = val.replace(/^\s+/g, '');
-                        t.output = newVal + "," + t.output;
-                    });
+                    for (let index = 0; index < list.length; index++) {
 
-                    t.notify({
-                        eventName: "getFiles",
-                        object: t,
-                        files: t.output.replace(/\,+$/, "")
-                    })
+                        let item = list[index];
+
+                        let file = {
+                            type: 'image',
+                            file: item.getPath(),
+                            rawData: item
+                        }
+
+                        output.push(file);
+                    }
+
                 }
                 break;
 
-            case FilePickerConst.REQUEST_CODE_DOC:
+            case Constant.REQUEST_CODE_PICK_VIDEO:
+                if (resultCode == androidAcivity.RESULT_OK) {
 
-                if (resultCode == androidAcivity.RESULT_OK && data != null) {
+                    let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_VIDEO);
 
-                    let docPaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS);
-                    docPaths = docPaths.toString();
-                    docPaths = docPaths.replace(/[\[\]']+/g, "");
-                    docPaths = docPaths.split(",");
+                    list = list.toArray();
 
-                    docPaths.forEach(val => {
-                        let newVal = val.replace(/^\s+/g, '');
-                        t.output = newVal + "," + t.output;
-                    });
+                    for (let index = 0; index < list.length; index++) {
 
-                    t.notify({
-                        eventName: "getFiles",
-                        object: t,
-                        files: t.output.replace(/\,+$/, "")
-                    })
+                        let item = list[index];
+
+                        let file = {
+                            type: 'video',
+                            file: item.getPath(),
+                            rawData: item
+                        }
+
+                        output.push(file);
+                    }
+                }
+                break;
+
+            case Constant.REQUEST_CODE_PICK_AUDIO:
+                if (resultCode == androidAcivity.RESULT_OK) {
+
+                    let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_AUDIO);
+
+                    list = list.toArray();
+
+                    for (let index = 0; index < list.length; index++) {
+
+                        let item = list[index];
+
+                        let file = {
+                            type: 'audio',
+                            file: item.getPath(),
+                            rawData: item
+                        }
+
+                        output.push(file);
+                    }
+
+                }
+                break;
+
+            case Constant.REQUEST_CODE_PICK_FILE:
+                if (resultCode == androidAcivity.RESULT_OK) {
+
+                    let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
+
+                    list = list.toArray();
+
+                    for (let index = 0; index < list.length; index++) {
+
+                        let item = list[index];
+
+                        let file = {
+                            type: 'normalFile',
+                            file: item.getPath(),
+                            rawData: item
+                        }
+
+                        output.push(file);
+                    }
                 }
                 break;
         }
+
+        setTimeout(() => {
+
+            this.results = output;
+
+            t.notify({
+                eventName: 'getFiles',
+                object: t
+            });
+
+        }, 500);
     }
+
 }

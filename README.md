@@ -4,19 +4,17 @@
 # nativescript-mediafilepicker
 This plugin will allow user to pick video & image files from their device. User can also use their camera to take picture from this plugin directly. It's a combination features of [nativescript-imagepicker](https://github.com/NativeScript/nativescript-imagepicker) and [nativescript-camera](https://github.com/NativeScript/nativescript-camera/) plugin with some extended features using following libaries:
 
-* Android: [Android-FilePicker](https://github.com/DroidNinja/Android-FilePicker)
-* iOS: [GMImagePicker](https://github.com/codelathe/GMImagePicker.git)
+* Android: [MultiType-FilePicker](https://github.com/fishwjy/MultiType-FilePicker)
+* iOS: [IQMediaPickerController](https://github.com/hackiftekhar/IQMediaPickerController)
 
-**Note for iOS:** In iOS you can't use file's link directly from the picker because of the permission issue. For resolving this issue this plugin will copy the selected files in your app's document directory under a new folder `filepicker`. So, after using that file you can delete that file to reduce memory use. You can check the demo app.
 
 
 **Features:**
 
-* Image and video file picker
-* Multiple or single selection
-* Camera support for taking picture
-* File picker (Only for Android)
-* Custom file type (Only for Android)
+* Image, Video and Audio file picker.
+* Capturing Image, Video and Audio from APP directly.
+* Single or Multiple selections.
+* More...
 
 ## Installation
 
@@ -24,117 +22,53 @@ This plugin will allow user to pick video & image files from their device. User 
 tns plugin add nativescript-mediafilepicker
 ```
 
-## Usage 
+## Usage (Please check demo project for details)
 
 ```javascript
-    import { Mediafilepicker, MediaFilepickerOptions } from 'nativescript-mediafilepicker';
-    private mediafilepicker;
-    
-    let options: MediaFilepickerOptions = {
-      android: {
-        mxcount: 2,
-        enableImagePicker: true,
-        enableVideoPicker: true,
-        enableCameraSupport: true,
-      },
-      ios: {
-        allowsMultipleSelection: true,
-        title: "Album",
-        showCameraButton: true,
-      }
-    };
-    this.mediafilepicker = new Mediafilepicker();
+import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
 
-    this.mediafilepicker.on("getFiles", function (res: any) {
- 
-      let files = res.files;
+private mediafilepicker: Mediafilepicker;
 
-      if (files.length > 0) {
+let options: ImagePickerOptions = {
+    android: {
+        isNeedCamera: true,
+        maxNumberFiles: 10,
+        isNeedFolderList: true
+    }
+}
+this.mediafilepicker.openImagePicker(options);
 
-        files = files.split(",");
+this.mediafilepicker.on("getFiles", function (res) {
+    let results = res.object.get('results');
 
-        files.forEach(file => {
+    if (results) {
 
-          let fileName = file.replace(/^.*[\/]/, '');
+        for (let i = 0; i < results.length; i++) {
 
-          console.log(file);
-          console.log(fileName);
+            let result = results[i];
+            console.log(result.file);
 
-          // you can do anything here
+        }
+    }
+})
 
-
-          if (app.ios) {
-
-            let folder = fs.knownFolders.documents();
-            let file = folder.getFolder("filepicker").getFile(fileName);
-
-            if (fs.File.exists(file.path)) {
-              folder.getFile("filepicker/" + fileName).remove()
-            } else {
-              console.log("not found")
-            }
-          }
-        });
-      }else{
-        console.log("There was some problem to select the file. Looks like user has cancel it.")
-      }
-
-    })
-    this.mediafilepicker.on("error", function (res: any) {
-        console.log(res.msg)
-    })
-    this.mediafilepicker.startFilePicker(options);
+this.mediafilepicker.on("error", function (res) {
+    let msg = res.object.get('msg');
+    console.log(msg);
+})
 ```
 
 ## All options
 
 ```javascript
-    android: {
-    mxcount: number; //used to specify maximum count of media picks (dont use if you want no limit)
-    setSelectedFiles: string; //to show already selected items
-    setActivityTheme: string; //used to set theme for toolbar (must be an actionbar theme)
-    enableImagePicker: boolean; //added option to disable image picker
-    enableVideoPicker: boolean; //added video picker alongside images
-    enableDocSupport: boolean; //If you want to enable/disable default document picker, use this. (Enabled by default)
-    enableCameraSupport: boolean; //to show camera in the picker (Enabled by default)
-    showGifs: boolean; //to show gifs images in the picker
-    pickFile: boolean; // if you want for file picker 
-    addFileSupport: { //If you want to specify custom file type, use this. (example below)
-      title: string;
-      type: any;
-      icon: string;
-    };
-  };
-  ios: {
-    displaySelectionInfoToolbar: boolean; //Display or not the selection info Toolbar
-    displayAlbumsNumberOfAssets: boolean; //Display or not the number of assets in each album:
-    title: string; //Custom title
-    mediaTypes: string; // mediatype: 'image' or 'video' .. default both
-    customNavigationBarPrompt: string; //Custom helper message
-    colsInPortrait: number; //Customize the number of cols depending on orientation and the inter-item spacing
-    colsInLandscape: number; //Customize the number of cols depending on orientation and the inter-item spacing
-    minimumInteritemSpacing: number; //Customize the number of cols depending on orientation and the inter-item spacing
-    allowsMultipleSelection: boolean; //multiple selecion default true
-    confirmSingleSelection: boolean; //Show a promt to confirm single selection
-    confirmSingleSelectionPrompt: string; //Show a promt to confirm single selection
-    showCameraButton: boolean; //Camera integration
-    autoSelectCameraImages: boolean; //Auto select image after take picture using camera
-  };
+openImagePicker(params: ImagePickerOptions): void;
+openVideoPicker(params: VideoPickerOptions): void;
+openAudioPicker(params: AudioPickerOptions): void;
+openFilePicker(params: FilePickerOptions): void;
 ```
-**example addFileSupport:**
-```javascript
-    addFileSupport: { 
-          title: "Zip",
-          type: [".zip", ".rar", ".ZIP"],
-          icon: android.R.drawable.ic_dialog_info
-        }
-```
+
 
 ## Screenshots
-
-<img width="40%" src="screenshots/ios_screen.png" alt="iOS" float="left">
-
-<img width="50%" src="screenshots/android_screen.png" alt="Android" float="left">
 
 
 ## License
