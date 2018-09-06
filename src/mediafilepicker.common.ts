@@ -1,8 +1,8 @@
 export class MediaPickerInterface {
-    openImagePicker(params: ImagePickerOptions) { };
-    openVideoPicker(params: VideoPickerOptions) { };
-    openAudioPicker(params: AudioPickerOptions) { };
-    openFilePicker(params: FilePickerOptions) { };
+    openImagePicker(params: ImagePickerOptions) { }
+    openVideoPicker(params: VideoPickerOptions) { }
+    openAudioPicker(params: AudioPickerOptions) { }
+    openFilePicker(params: FilePickerOptions) { }
 }
 export interface ImagePickerOptions {
 
@@ -10,7 +10,7 @@ export interface ImagePickerOptions {
         isNeedCamera?: boolean;
         maxNumberFiles?: Number;
         isNeedFolderList?: boolean;
-    }
+    };
 }
 
 export interface VideoPickerOptions {
@@ -20,7 +20,7 @@ export interface VideoPickerOptions {
         maxNumberFiles?: Number;
         isNeedFolderList?: boolean;
         maxDuration?: Number;
-    }
+    };
 }
 
 export interface AudioPickerOptions {
@@ -29,12 +29,12 @@ export interface AudioPickerOptions {
         maxNumberFiles?: Number;
         isNeedFolderList?: boolean;
         maxSize?: Number;
-    }
+    };
 }
 
 export interface FilePickerOptions {
     android: {
         extensions: Array<String>,
         maxNumberFiles?: Number;
-    }
+    };
 }

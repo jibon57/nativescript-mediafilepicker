@@ -123,7 +123,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 t.notify({
                     eventName: 'error',
                     object: t
-                })
+                });
             });
 
         app.android.on(app.AndroidApplication.activityResultEvent, onResult);
@@ -148,7 +148,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         switch (requestCode) {
 
             case Constant.REQUEST_CODE_PICK_IMAGE:
-                if (resultCode == androidAcivity.RESULT_OK) {
+                if (resultCode === androidAcivity.RESULT_OK) {
 
                     let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_IMAGE);
 
@@ -162,7 +162,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                             type: 'image',
                             file: item.getPath(),
                             rawData: item
-                        }
+                        };
 
                         output.push(file);
                     }
@@ -171,7 +171,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 break;
 
             case Constant.REQUEST_CODE_PICK_VIDEO:
-                if (resultCode == androidAcivity.RESULT_OK) {
+                if (resultCode === androidAcivity.RESULT_OK) {
 
                     let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_VIDEO);
 
@@ -185,7 +185,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                             type: 'video',
                             file: item.getPath(),
                             rawData: item
-                        }
+                        };
 
                         output.push(file);
                     }
@@ -193,7 +193,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 break;
 
             case Constant.REQUEST_CODE_PICK_AUDIO:
-                if (resultCode == androidAcivity.RESULT_OK) {
+                if (resultCode === androidAcivity.RESULT_OK) {
 
                     let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_AUDIO);
 
@@ -207,7 +207,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                             type: 'audio',
                             file: item.getPath(),
                             rawData: item
-                        }
+                        };
 
                         output.push(file);
                     }
@@ -216,7 +216,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 break;
 
             case Constant.REQUEST_CODE_PICK_FILE:
-                if (resultCode == androidAcivity.RESULT_OK) {
+                if (resultCode === androidAcivity.RESULT_OK) {
 
                     let list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
 
@@ -230,7 +230,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                             type: 'normalFile',
                             file: item.getPath(),
                             rawData: item
-                        }
+                        };
 
                         output.push(file);
                     }
