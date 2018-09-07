@@ -1,10 +1,433 @@
 import { Observable } from 'tns-core-modules/data/observable';
+import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
 import * as app from 'tns-core-modules/application';
+import * as utils from "tns-core-modules/utils/utils";
+import * as fs from "tns-core-modules/file-system/file-system"
 
+declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio
 
-export class Mediafilepicker extends Observable {
+export class Mediafilepicker extends Observable implements MediaPickerInterface {
+
+    private _mediaPickerIQDeligate: MediafilepickerIQMediaPickerControllerDelegate;
+    public collections = utils.ios.collections;
+
+    public results;
+    public msg;
 
     constructor() {
+
         super();
+
+        this._mediaPickerIQDeligate = MediafilepickerIQMediaPickerControllerDelegate.initWithOwner(new WeakRef(this));
+
+        let docuPath = fs.knownFolders.documents();
+        docuPath.getFolder("filepicker");
     }
+
+    /**
+     * openImagePicker
+     */
+    public openImagePicker(params: ImagePickerOptions) {
+
+        let options = params.ios;
+
+        let controller = IQMediaPickerController.alloc().init();
+        controller.delegate = this._mediaPickerIQDeligate;
+
+        controller.sourceType = IQMediaPickerControllerSourceType.Library;
+        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
+
+        if (options.isCaptureMood) {
+            controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
+        }
+
+        if (options.maxNumberFiles > 0) {
+            controller.allowsPickingMultipleItems = true;
+            controller.maximumItemCount = options.maxNumberFiles;
+        }
+
+
+        this.presentViewController(controller);
+    }
+
+    /**
+     * openVideoPicker
+     */
+    public openVideoPicker(params: VideoPickerOptions) {
+
+        let options = params.ios;
+        let controller = IQMediaPickerController.alloc().init();
+        controller.delegate = this._mediaPickerIQDeligate;
+        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
+        controller.sourceType = IQMediaPickerControllerSourceType.Library;
+
+        if (options.isCaptureMood) {
+            controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
+        }
+
+        if (options.maxNumberFiles > 0) {
+            controller.allowsPickingMultipleItems = true;
+            controller.maximumItemCount = options.maxNumberFiles;
+        }
+
+        if (options.videoMaximumDuration > 0) {
+            controller.videoMaximumDuration = options.videoMaximumDuration;
+        }
+
+        if (options.allowedVideoQualities) {
+
+            if (options.allowedVideoQualities.length > 0) {
+                controller.allowedVideoQualities = this.collections.jsArrayToNSArray(options.allowedVideoQualities);
+            }
+
+        }
+
+        this.presentViewController(controller);
+    }
+
+    /**
+     * openAudioPicker
+     */
+    public openAudioPicker(params: AudioPickerOptions) {
+
+        let options = params.ios;
+        let controller = IQMediaPickerController.alloc().init();
+        controller.delegate = this._mediaPickerIQDeligate;
+        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
+        controller.sourceType = IQMediaPickerControllerSourceType.Library;
+
+        if (options.isCaptureMood) {
+            controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
+        }
+
+        if (options.maxNumberFiles > 0) {
+            controller.allowsPickingMultipleItems = true;
+            controller.maximumItemCount = options.maxNumberFiles;
+        }
+
+        if (options.audioMaximumDuration > 0) {
+            controller.audioMaximumDuration = options.audioMaximumDuration;
+        }
+
+        this.presentViewController(controller);
+    }
+
+    /**
+     * openFilePicker
+     */
+    public openFilePicker(params: FilePickerOptions) {
+
+
+
+    }
+
+    /**
+     * copyPHImageToAppDirectory
+     */
+    public copyPHImageToAppDirectory(rawData: PHAsset, fileName: string) {
+
+        return new Promise(function (resolve, reject) {
+
+            let docuPath = fs.knownFolders.documents();
+            let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
+
+            let output = {
+                status: false,
+                msg: 'error',
+                file: ''
+            }
+
+            let options = PHImageRequestOptions.alloc().init();
+            options.synchronous = true;
+
+            PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(rawData, options, function (imageData, dataUTI, orientation, info) {
+
+                let newData: NSData = imageData;
+
+                if (newData) {
+
+                    try {
+                        newData.writeToFileAtomically(targetImgeURL, true);
+
+                        output = {
+                            status: true,
+                            msg: 'success',
+                            file: targetImgeURL.toString()
+                        }
+                        resolve(output);
+
+                    } catch (e) {
+                        output.msg = e;
+                        reject(output);
+                    }
+
+                }
+            })
+        })
+    }
+
+    /**
+     * copyPHVideoToAppDirectory
+     */
+    public copyPHVideoToAppDirectory(asset: AVURLAsset, fileName) {
+
+        return new Promise(function (resolve, reject) {
+
+            let docuPath = fs.knownFolders.documents();
+
+            let output = {
+                status: false,
+                msg: 'error',
+                file: ''
+            }
+
+            if (fs.File.exists(docuPath.path + "/filepicker/" + fileName)) {
+                docuPath.getFile("filepicker/" + fileName).remove();
+            }
+
+            let targetURL = NSURL.fileURLWithPath(docuPath.path + "/filepicker/" + fileName);
+
+            try {
+                let write = NSFileManager.defaultManager.copyItemAtURLToURLError(asset.URL, targetURL);
+
+                if (write) {
+
+                    output = {
+                        status: true,
+                        msg: 'success',
+                        file: targetURL.toString()
+                    }
+
+                    resolve(output);
+                } else {
+                    output.msg = "Not copied";
+                    reject(output);
+                }
+            } catch (e) {
+                output.msg = e;
+                reject(output);
+            }
+
+        })
+
+    }
+
+    /**
+     * convertPHImageToUIImage
+     */
+    public convertPHImageToUIImage(rawData: PHAsset) {
+
+        return new Promise(function (resolve, reject) {
+
+            let options = PHImageRequestOptions.new();
+            options.resizeMode = PHImageRequestOptionsResizeMode.Fast;
+            options.synchronous = true;
+
+            PHImageManager.defaultManager().requestImageForAssetTargetSizeContentModeOptionsResultHandler(rawData, PHImageManagerMaximumSize, PHImageContentMode.AspectFill, options, function (result, info) {
+                if (result) {
+                    resolve(result)
+                } else {
+                    reject("something went wrong!");
+                }
+            })
+        })
+    }
+
+    /**
+     * copyUIImageToAppDirectory
+     */
+    public copyUIImageToAppDirectory(image: UIImage, fileName: any) {
+        return new Promise(function (resolve, reject) {
+            let data = UIImageJPEGRepresentation(image, 1);
+            let docuPath = fs.knownFolders.documents();
+            let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
+
+            let output = {
+                status: false,
+                msg: 'error',
+                file: ''
+            }
+            try {
+                data.writeToFileAtomically(targetImgeURL, true);
+                output = {
+                    status: true,
+                    msg: 'success',
+                    file: targetImgeURL.toString()
+                }
+                resolve(output);
+
+            } catch (e) {
+                output.msg = e;
+                reject(output)
+            }
+        })
+    }
+
+    private presentViewController(controller) {
+
+        let app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
+
+        app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null)
+    }
+
+
+
+}
+
+export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject implements IQMediaPickerControllerDelegate {
+
+    public static ObjCProtocols = [IQMediaPickerControllerDelegate];
+
+    private _owner: WeakRef<Mediafilepicker>;
+
+    public static initWithOwner(owner: WeakRef<Mediafilepicker>): MediafilepickerIQMediaPickerControllerDelegate {
+
+        let deligate = <MediafilepickerIQMediaPickerControllerDelegate>super.new();
+        deligate._owner = owner;
+
+        return deligate;
+    }
+
+    public mediaPickerControllerDidFinishMedias(controller: IQMediaPickerController, selectedMedias: IQMediaPickerSelection) {
+
+        let t = this._owner.get(), output = [];
+
+        //either video or image
+        if (selectedMedias.selectedAssets.count > 0) {
+
+            let results = selectedMedias.selectedAssets;
+
+            for (let i = 0; i < results.count; i++) {
+
+                let result: PHAsset = results[i];
+
+                if (result.mediaType == PHAssetMediaTypeImage) {
+
+                    let _uriRequestOptions = PHImageRequestOptions.alloc().init();
+                    _uriRequestOptions.synchronous = true;
+
+                    PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(result, _uriRequestOptions, (data, uti, orientation, info) => {
+
+                        let uri = info.objectForKey("PHImageFileURLKey");
+                        let fileUrl;
+
+                        if (uri) {
+                            fileUrl = uri.toString();
+                        }
+
+                        let file = {
+                            type: 'image',
+                            file: fileUrl,
+                            rawData: result
+                        }
+                        output.push(file);
+
+                    });
+                } else if (result.mediaType == PHAssetMediaTypeVideo) {
+
+
+                    let options = PHVideoRequestOptions.new();
+                    options.deliveryMode = PHVideoRequestOptionsDeliveryMode.HighQualityFormat;
+
+                    PHImageManager.defaultManager().requestAVAssetForVideoOptionsResultHandler(result, options, function (asset, audioMix, info) {
+
+                        let urlAsset = asset as AVURLAsset;
+                        let url: NSURL;
+
+                        if (urlAsset.URL) {
+                            url = urlAsset.URL;
+                        }
+
+                        let file = {
+                            type: 'image',
+                            file: url.absoluteString,
+                            rawData: result,
+                            urlAsset: urlAsset
+                        }
+                        output.push(file);
+                    })
+                }
+
+            }
+        }
+        // let's check if audio
+        else if (selectedMedias.selectedAudios.count > 0) {
+
+            let results = selectedMedias.selectedAudios;
+
+            for (let i = 0; i < results.count; i++) {
+
+                let result = results[i];
+
+                let file = {
+                    type: 'audio',
+                    file: result.assetURL.toString(),
+                    rawData: result
+                }
+
+                output.push(file);
+
+            }
+        }
+        // should be something recoded :D 
+        else if (selectedMedias.selectedAssetsURL.count > 0) {
+
+            let results = selectedMedias.selectedAssetsURL;
+
+            for (let i = 0; i < results.count; i++) {
+
+                let result = results[i];
+
+                let file = {
+                    type: 'recorded',
+                    file: result.relativePath,
+                    rawData: result
+                }
+
+                output.push(file);
+
+            }
+        }
+        else if (selectedMedias.selectedImages.count) {
+
+            let results = selectedMedias.selectedImages;
+
+            for (let i = 0; i < results.count; i++) {
+
+                let result = results[i];
+
+                let file = {
+                    type: 'capturedImage',
+                    file: result,
+                    rawData: result
+                }
+
+                output.push(file);
+
+            }
+        }
+
+        setTimeout(() => {
+
+            t.results = output;
+
+            t.notify({
+                eventName: 'getFiles',
+                object: t
+            })
+
+        }, 1000);
+
+    }
+
+    public mediaPickerControllerDidCancel(controller: IQMediaPickerController) {
+
+        this._owner.get().msg = 'Picker cancel';
+
+        this._owner.get().notify({
+            eventName: 'cancel',
+            object: this._owner.get()
+        });
+    }
+
 }

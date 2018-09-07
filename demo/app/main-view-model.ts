@@ -1,137 +1,201 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
+import * as app from 'tns-core-modules/application';
+declare const AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh, AVCaptureSessionPresetLow;
 
 export class HelloWorldModel extends Observable {
-  private mediafilepicker: Mediafilepicker;
 
-  constructor() {
-    super();
-    this.mediafilepicker = new Mediafilepicker();
-  }
+    constructor() {
+        super();
+    }
 
-  /**
-   * openImagePicker
-   */
-  public openImagePicker() {
+    /**
+     * openImagePicker
+     */
+    public openImagePicker() {
+        let t = this;
+        let options: ImagePickerOptions = {
+            android: {
+                isNeedCamera: true,
+                maxNumberFiles: 10,
+                isNeedFolderList: true
+            }, ios: {
+                isCaptureMood: true,
+                maxNumberFiles: 10
+            }
+        };
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openImagePicker(options);
 
-    let options: ImagePickerOptions = {
-      android: {
-        isNeedCamera: true,
-        maxNumberFiles: 10,
-        isNeedFolderList: true
-      }
-    };
-    this.mediafilepicker.openImagePicker(options);
+        mediafilepicker.on("getFiles", function (res) {
+            let results = res.object.get('results');
 
-    this.mediafilepicker.on("getFiles", function (res) {
-      let results = res.object.get('results');
+            if (results) {
 
-      if (results) {
+                for (let i = 0; i < results.length; i++) {
 
-        for (let i = 0; i < results.length; i++) {
+                    let result = results[i];
 
-          let result = results[i];
-          console.log(result.file);
+                    let file = result.file;
 
-        }
-      }
-    });
+                    console.log(file);
 
-    this.mediafilepicker.on("error", function (res) {
-      let msg = res.object.get('msg');
-      console.log(msg);
-    });
-  }
+                    if (result.file && app.ios && !options.ios.isCaptureMood) {
 
-  /**
-   * openVideoPicker
-   */
-  public openVideoPicker() {
+                        // We can copy the image to app directory for futher proccess.
+                        /* let fileName = file.replace(/^.*[\/]/, '');
+                        mediafilepicker.copyPHImageToAppDirectory(result.rawData, fileName).then((res: any) => {
+                            console.dir(res);
+                        }).catch((e) => {
+                            console.dir(e);
+                        })*/
 
-    let options: VideoPickerOptions = {
-      android: {
-        isNeedCamera: true,
-        maxNumberFiles: 2,
-        isNeedFolderList: true
-      }
-    };
-    this.mediafilepicker.openVideoPicker(options);
+                        // or can get UIImage to display
+                        mediafilepicker.convertPHImageToUIImage(result.rawData).then(res => {
+                            console.log(res);
+                        })
+                    } else if (result.file && app.ios) {
+                        //So we have taken image & will get UIImage
 
-    this.mediafilepicker.on("getFiles", function (res) {
+                        //We can copy it to app directory, if need
+                        let fileName = "myTmpImage.jpg";
+                        mediafilepicker.copyUIImageToAppDirectory(result.rawData, fileName).then((res: any) => {
+                            console.dir(res);
+                        }).catch(e => {
+                            console.dir(e);
+                        })
+                    }
 
-      let results = res.object.get('results');
+                }
+            }
+        });
 
-      if (results) {
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+    }
 
-        for (let i = 0; i < results.length; i++) {
+    /**
+     * openVideoPicker
+     */
+    public openVideoPicker() {
 
-          let result = results[i];
-          console.log(result.file);
+        let options: VideoPickerOptions = {
+            android: {
+                isNeedCamera: true,
+                maxNumberFiles: 2,
+                isNeedFolderList: true
+            },
+            ios: {
+                isCaptureMood: true,
+                videoMaximumDuration: 10,
+                allowedVideoQualities: [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh] //get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+            }
+        };
+        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openVideoPicker(options);
 
-        }
-      }
+        mediafilepicker.on("getFiles", function (res) {
 
-    });
-  }
+            let results = res.object.get('results');
 
-  /**
-   * audio
-   */
-  public openAudioPicker() {
+            if (results) {
 
-    let options: AudioPickerOptions = {
-      android: {
-        isNeedRecorder: true,
-        maxNumberFiles: 2,
-        isNeedFolderList: true
-      }
-    };
-    this.mediafilepicker.openAudioPicker(options);
+                for (let i = 0; i < results.length; i++) {
 
-    this.mediafilepicker.on("getFiles", function (res) {
+                    let result = results[i];
+                    console.dir(result)
 
-      let results = res.object.get('results');
+                    let file = result.file;
 
-      if (results) {
+                    console.log(file);
 
-        for (let i = 0; i < results.length; i++) {
+                    if (result.file && app.ios && !options.ios.isCaptureMood) {
 
-          let result = results[i];
-          console.log(result.file);
+                        let fileName = file.replace(/^.*[\/]/, '');
 
-        }
-      }
+                        setTimeout(() => {
+                            mediafilepicker.copyPHVideoToAppDirectory(result.urlAsset, fileName).then(res => {
+                                console.dir(res)
+                            }).catch(e => {
+                                console.dir(e);
+                            })
+                        }, 1000)
 
-    });
-  }
+                    } else if (result.file && app.ios) {
+                        //or we will get our own recorded video :) 
+                        console.log(file);
+                    }
 
-  /**
-   * openCustomFiles
-   */
-  public openCustomFilesPicker() {
-    let options: FilePickerOptions = {
-      android: {
-        extensions: ['txt', 'pdf'],
-        maxNumberFiles: 2
-      }
-    };
+                }
+            }
 
-    this.mediafilepicker.openFilePicker(options);
+        });
+    }
 
-    this.mediafilepicker.on("getFiles", function (res) {
+    /**
+     * audio
+     */
+    public openAudioPicker() {
 
-      let results = res.object.get('results');
+        let options: AudioPickerOptions = {
+            android: {
+                isNeedRecorder: true,
+                maxNumberFiles: 2,
+                isNeedFolderList: true
+            },
+            ios: {
+                isCaptureMood: false,
+                maxNumberFiles: 5,
+                audioMaximumDuration: 10,
+            }
+        };
+        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openAudioPicker(options);
 
-      if (results) {
+        mediafilepicker.on("getFiles", function (res) {
 
-        for (let i = 0; i < results.length; i++) {
+            let results = res.object.get('results');
 
-          let result = results[i];
-          console.log(result.file);
+            if (results) {
 
-        }
-      }
+                for (let i = 0; i < results.length; i++) {
 
-    });
-  }
+                    let result = results[i];
+                    console.log(result);
+
+                }
+            }
+
+        });
+    }
+
+    /**
+     * openCustomFiles
+     */
+    public openCustomFilesPicker() {
+        let options: FilePickerOptions = {
+            android: {
+                extensions: ['txt', 'pdf'],
+                maxNumberFiles: 2
+            }
+        };
+
+        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openFilePicker(options);
+
+        mediafilepicker.on("getFiles", function (res) {
+
+            let results = res.object.get('results');
+
+            if (results) {
+
+                for (let i = 0; i < results.length; i++) {
+
+                    let result = results[i];
+                    console.log(result.file);
+
+                }
+            }
+
+        });
+    }
 }
