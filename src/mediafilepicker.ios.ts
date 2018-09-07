@@ -1,14 +1,14 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
-import * as app from 'tns-core-modules/application';
 import * as utils from "tns-core-modules/utils/utils";
-import * as fs from "tns-core-modules/file-system/file-system"
+import * as fs from "tns-core-modules/file-system/file-system";
 
-declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio
+declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio;
 
 export class Mediafilepicker extends Observable implements MediaPickerInterface {
 
     private _mediaPickerIQDeligate: MediafilepickerIQMediaPickerControllerDelegate;
+    private _mediaPickerDocumentDeligate: MediafilepickerDocumentPickerDelegate;
     public collections = utils.ios.collections;
 
     public results;
@@ -19,6 +19,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         super();
 
         this._mediaPickerIQDeligate = MediafilepickerIQMediaPickerControllerDelegate.initWithOwner(new WeakRef(this));
+        this._mediaPickerDocumentDeligate = MediafilepickerDocumentPickerDelegate.initWithOwner(new WeakRef(this));
 
         let docuPath = fs.knownFolders.documents();
         docuPath.getFolder("filepicker");
@@ -117,8 +118,19 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      */
     public openFilePicker(params: FilePickerOptions) {
 
+        let options = params.ios;
+        let documentTypes;
 
+        if (options.extensions) {
+            if (options.extensions.length > 0) {
+                documentTypes = this.collections.jsArrayToNSArray(options.extensions);
+            }
+        }
 
+        let controller = UIDocumentPickerViewController.alloc().initWithDocumentTypesInMode(documentTypes, UIDocumentPickerMode.Import);
+        controller.delegate = this._mediaPickerDocumentDeligate;
+
+        this.presentViewController(controller);
     }
 
     /**
@@ -135,7 +147,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 status: false,
                 msg: 'error',
                 file: ''
-            }
+            };
 
             let options = PHImageRequestOptions.alloc().init();
             options.synchronous = true;
@@ -153,7 +165,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                             status: true,
                             msg: 'success',
                             file: targetImgeURL.toString()
-                        }
+                        };
                         resolve(output);
 
                     } catch (e) {
@@ -179,7 +191,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 status: false,
                 msg: 'error',
                 file: ''
-            }
+            };
 
             if (fs.File.exists(docuPath.path + "/filepicker/" + fileName)) {
                 docuPath.getFile("filepicker/" + fileName).remove();
@@ -225,7 +237,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
             PHImageManager.defaultManager().requestImageForAssetTargetSizeContentModeOptionsResultHandler(rawData, PHImageManagerMaximumSize, PHImageContentMode.AspectFill, options, function (result, info) {
                 if (result) {
-                    resolve(result)
+                    resolve(result);
                 } else {
                     reject("something went wrong!");
                 }
@@ -246,19 +258,19 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 status: false,
                 msg: 'error',
                 file: ''
-            }
+            };
             try {
                 data.writeToFileAtomically(targetImgeURL, true);
                 output = {
                     status: true,
                     msg: 'success',
                     file: targetImgeURL.toString()
-                }
+                };
                 resolve(output);
 
             } catch (e) {
                 output.msg = e;
-                reject(output)
+                reject(output);
             }
         })
     }
@@ -267,7 +279,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
 
-        app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null)
+        app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null);
     }
 
 
@@ -343,7 +355,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                             file: url.absoluteString,
                             rawData: result,
                             urlAsset: urlAsset
-                        }
+                        };
                         output.push(file);
                     })
                 }
@@ -363,7 +375,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                     type: 'audio',
                     file: result.assetURL.toString(),
                     rawData: result
-                }
+                };
 
                 output.push(file);
 
@@ -382,7 +394,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                     type: 'recorded',
                     file: result.relativePath,
                     rawData: result
-                }
+                };
 
                 output.push(file);
 
@@ -400,7 +412,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                     type: 'capturedImage',
                     file: result,
                     rawData: result
-                }
+                };
 
                 output.push(file);
 
@@ -414,7 +426,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
             t.notify({
                 eventName: 'getFiles',
                 object: t
-            })
+            });
 
         }, 1000);
 
@@ -430,4 +442,49 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
         });
     }
 
+}
+
+class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocumentPickerDelegate {
+
+    private _owner: WeakRef<Mediafilepicker>;
+    public static ObjCProtocols = [UIDocumentPickerDelegate];
+
+    static initWithOwner(owner: WeakRef<Mediafilepicker>): MediafilepickerDocumentPickerDelegate {
+        const delegate = <MediafilepickerDocumentPickerDelegate>MediafilepickerDocumentPickerDelegate.new();
+        delegate._owner = owner;
+
+        return delegate;
+    }
+
+    documentPickerDidPickDocumentAtURL(controller: UIDocumentPickerViewController, url: NSURL) {
+
+        let t = this._owner.get();
+
+        setTimeout(() => {
+
+            let file = {
+                type: 'normalFile',
+                file: url.absoluteString,
+                rawData: url
+            };
+
+            t.results = [file];
+
+            t.notify({
+                eventName: 'getFiles',
+                object: t
+            });
+
+        }, 1000);
+
+    }
+    documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
+
+        this._owner.get().msg = 'Picker cancel';
+
+        this._owner.get().notify({
+            eventName: 'cancel',
+            object: this._owner.get()
+        });
+    }
 }

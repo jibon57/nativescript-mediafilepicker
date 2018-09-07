@@ -47,4 +47,7 @@ export interface FilePickerOptions {
         extensions: Array<String>;
         maxNumberFiles?: Number;
     };
+    ios?: {
+        extensions: Array<string>;
+    };
 }

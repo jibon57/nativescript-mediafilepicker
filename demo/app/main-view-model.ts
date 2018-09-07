@@ -1,7 +1,7 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
 import * as app from 'tns-core-modules/application';
-declare const AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh, AVCaptureSessionPresetLow;
+declare const AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh, AVCaptureSessionPresetLow, kUTTypePDF, kUTTypeText;
 
 export class HelloWorldModel extends Observable {
 
@@ -177,6 +177,9 @@ export class HelloWorldModel extends Observable {
             android: {
                 extensions: ['txt', 'pdf'],
                 maxNumberFiles: 2
+            },
+            ios: {
+                extensions: [kUTTypePDF, kUTTypeText] //you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
             }
         };
 
