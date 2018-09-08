@@ -9,15 +9,6 @@ This plugin will allow user to pick video & image files from their device. User 
 
 **Note for iOS:** In iOS you can't use file's link directly from the picker because of the permission issue. For resolving this issue this plugin will copy the selected files in your app's document directory under a new folder `filepicker`. So, after using that file you can delete that file to reduce memory use. You can check the demo app.
 
-**Note for User Linux:** Before adding this plugin, make sure your permissions are open, at 755 or 777. Run this command to change the permissions of all directories in your project :
-
-```
-sudo find my_dir/my_project -type d -exec chmod 755 {} \;
-```
-Or
-```
-sudo find my_dir/my_project -type d -exec chmod 777 {} \;
-```
 
 **Features:**
 
@@ -25,7 +16,7 @@ sudo find my_dir/my_project -type d -exec chmod 777 {} \;
 * Multiple or single selection
 * Camera support for taking picture
 * File picker (Only for Android)
-* Custom file type (Only for Android) 
+* Custom file type (Only for Android)
 
 ## Installation
 
@@ -34,7 +25,7 @@ tns plugin add nativescript-mediafilepicker
 ```
 
 ## Usage 
-### In TS
+
 ```javascript
     import { Mediafilepicker, MediaFilepickerOptions } from 'nativescript-mediafilepicker';
     private mediafilepicker;
@@ -93,75 +84,6 @@ tns plugin add nativescript-mediafilepicker
         console.log(res.msg)
     })
     this.mediafilepicker.startFilePicker(options);
-```
-
-### In JS
-```javascript
-const fs = require('file-system');
-const MF = require("nativescript-mediafilepicker");
-var mediafilepicker = new MF.Mediafilepicker();
-
-let MediaFilepickerOptions = {
-    android: {
-        mxcount: 2,
-        enableImagePicker: true,
-        enableVideoPicker: true,
-        enableCameraSupport: true,
-        /* pickFile: true,  
-        addFileSupport: {
-            title: "File",
-            type: [".zip", ".rar", ".ZIP", ".pdf", ".doc", ".docx" ],
-            icon: android.R.drawable.ic_dialog_info
-        } */
-    },
-    ios: {
-        allowsMultipleSelection: true,
-        title: "Album",
-        showCameraButton: true,
-    }
-};
-
-
-mediafilepicker.on("getFiles", function (res) {
-
-    let files = res.files;
-
-    if (files.length > 0) {
-
-        files = files.split(",");
-
-        files.forEach(file => {
-
-            let fileName = file.replace(/^.*[\/]/, '');
-
-            console.log(file);
-            console.log(fileName);
-
-            // you can do anything here
-
-
-            if (app.ios) {
-
-                let folder = fs.knownFolders.documents();
-                let file = folder.getFolder("filepicker").getFile(fileName);
-
-                if (fs.File.exists(file.path)) {
-                    folder.getFile("filepicker/" + fileName).remove()
-                } else {
-                    console.log("not found")
-                }
-            }
-        });
-    } else {
-        console.log("There was some problem to select the file. Looks like user has cancel it.")
-    }
-
-})
-mediafilepicker.on("error", function (res) {
-    console.log(res.msg)
-})
-mediafilepicker.startFilePicker(MediaFilepickerOptions);
-
 ```
 
 ## All options
