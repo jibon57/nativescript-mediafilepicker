@@ -22,7 +22,7 @@ A complete file picker solution for NativeScript. You will be able to pickup any
 * In iOS after selecting file you may not be able to use it directly. In this case you will need to copy that file in your app directory. After using it you may want to delete it. Please check the demo for more details.
 * At present selecting iCloud file isn't supported for iOS because of Native Library limitation.
 
-**Note: **I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
+**Note:** I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
 
 ## Installation
 
