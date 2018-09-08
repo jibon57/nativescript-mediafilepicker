@@ -24,6 +24,7 @@ export class HelloWorldModel extends Observable {
                 maxNumberFiles: 10
             }
         };
+
         let mediafilepicker = new Mediafilepicker();
         mediafilepicker.openImagePicker(options);
 
@@ -101,7 +102,9 @@ export class HelloWorldModel extends Observable {
                 allowedVideoQualities: allowedVideoQualities
             }
         };
-        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openVideoPicker(options);
+
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openVideoPicker(options);
 
         mediafilepicker.on("getFiles", function (res) {
 
@@ -159,7 +162,9 @@ export class HelloWorldModel extends Observable {
                 audioMaximumDuration: 10,
             }
         };
-        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openAudioPicker(options);
+
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openAudioPicker(options);
 
         mediafilepicker.on("getFiles", function (res) {
 
@@ -200,7 +205,8 @@ export class HelloWorldModel extends Observable {
             }
         };
 
-        let mediafilepicker = new Mediafilepicker(); mediafilepicker.openFilePicker(options);
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openFilePicker(options);
 
         mediafilepicker.on("getFiles", function (res) {
 
