@@ -1,5 +1,3 @@
-/// <reference path="android-declarations.d.ts"/>
-
 declare module com {
 	export module vincent {
 		export module filepicker {
@@ -271,7 +269,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class AudioPickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.AudioFile,com.vincent.filepicker.adapter.AudioPickAdapter.AudioPickViewHolder> {
+				export class AudioPickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.AudioFile, com.vincent.filepicker.adapter.AudioPickAdapter.AudioPickViewHolder> {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.AudioPickAdapter>;
 					public onBindViewHolder(param0: com.vincent.filepicker.adapter.AudioPickAdapter.AudioPickViewHolder, param1: number): void;
 					public constructor(param0: globalAndroid.content.Context, param1: number);
@@ -297,8 +295,8 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export abstract class BaseAdapter<T, VH>  extends globalAndroid.support.v7.widget.RecyclerView.Adapter<any> {
-					public static class: java.lang.Class<com.vincent.filepicker.adapter.BaseAdapter<any,any>>;
+				export abstract class BaseAdapter<T, VH> extends globalAndroid.support.v7.widget.RecyclerView.Adapter<any> {
+					public static class: java.lang.Class<com.vincent.filepicker.adapter.BaseAdapter<any, any>>;
 					public mContext: globalAndroid.content.Context;
 					public mList: java.util.ArrayList<any>;
 					public mListener: com.vincent.filepicker.adapter.OnSelectStateListener<any>;
@@ -320,7 +318,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class FolderListAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.Directory<any>,com.vincent.filepicker.adapter.FolderListAdapter.FolderListViewHolder> {
+				export class FolderListAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.Directory<any>, com.vincent.filepicker.adapter.FolderListAdapter.FolderListViewHolder> {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.FolderListAdapter>;
 					public onCreateViewHolder(param0: globalAndroid.view.ViewGroup, param1: number): com.vincent.filepicker.adapter.FolderListAdapter.FolderListViewHolder;
 					public onBindViewHolder(param0: com.vincent.filepicker.adapter.FolderListAdapter.FolderListViewHolder, param1: number): void;
@@ -355,7 +353,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class ImagePickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.ImageFile,com.vincent.filepicker.adapter.ImagePickAdapter.ImagePickViewHolder> {
+				export class ImagePickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.ImageFile, com.vincent.filepicker.adapter.ImagePickAdapter.ImagePickViewHolder> {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.ImagePickAdapter>;
 					public mImagePath: string;
 					public mImageUri: globalAndroid.net.Uri;
@@ -383,7 +381,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class NormalFilePickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.NormalFile,com.vincent.filepicker.adapter.NormalFilePickAdapter.NormalFilePickViewHolder> {
+				export class NormalFilePickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.NormalFile, com.vincent.filepicker.adapter.NormalFilePickAdapter.NormalFilePickViewHolder> {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.NormalFilePickAdapter>;
 					public constructor(param0: globalAndroid.content.Context, param1: java.util.ArrayList<com.vincent.filepicker.filter.entity.NormalFile>, param2: number);
 					public constructor(param0: globalAndroid.content.Context, param1: number);
@@ -407,7 +405,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class OnSelectStateListener<T>  extends java.lang.Object {
+				export class OnSelectStateListener<T> extends java.lang.Object {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.OnSelectStateListener<any>>;
 					/**
 					 * Constructs a new instance of the com.vincent.filepicker.adapter.OnSelectStateListener<any> interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -427,7 +425,7 @@ declare module com {
 	export module vincent {
 		export module filepicker {
 			export module adapter {
-				export class VideoPickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.VideoFile,com.vincent.filepicker.adapter.VideoPickAdapter.VideoPickViewHolder> {
+				export class VideoPickAdapter extends com.vincent.filepicker.adapter.BaseAdapter<com.vincent.filepicker.filter.entity.VideoFile, com.vincent.filepicker.adapter.VideoPickAdapter.VideoPickViewHolder> {
 					public static class: java.lang.Class<com.vincent.filepicker.adapter.VideoPickAdapter>;
 					public mVideoPath: string;
 					public constructor(param0: globalAndroid.content.Context, param1: boolean, param2: number, param3: number, param4: number);
@@ -495,7 +493,7 @@ declare module com {
 		export module filepicker {
 			export module filter {
 				export module callback {
-					export class FilterResultCallback<T>  extends java.lang.Object {
+					export class FilterResultCallback<T> extends java.lang.Object {
 						public static class: java.lang.Class<com.vincent.filepicker.filter.callback.FilterResultCallback<any>>;
 						/**
 						 * Constructs a new instance of the com.vincent.filepicker.filter.callback.FilterResultCallback<any> interface with the provided implementation. An empty constructor exists calling super() when extending the interface class.
@@ -573,7 +571,7 @@ declare module com {
 		export module filepicker {
 			export module filter {
 				export module entity {
-					export class Directory<T>  extends java.lang.Object {
+					export class Directory<T> extends java.lang.Object {
 						public static class: java.lang.Class<com.vincent.filepicker.filter.entity.Directory<any>>;
 						public setPath(param0: string): void;
 						public constructor();
