@@ -6,5 +6,9 @@
 	<string>This app requires access to camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to photo library</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app requires access to Music Library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to Microphone for recording</string>
 </dict>
 </plist>

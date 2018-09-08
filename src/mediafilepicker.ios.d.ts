@@ -1,15 +1,29 @@
-import { Common, CommonFilePicker, MediaFilepickerOptions } from './mediafilepicker.common';
-export declare class MediafilepickerDeligate extends NSObject {
-    static ObjCProtocols: any[];
-    private _owner;
-    static initWithOwner(owner: WeakRef<Mediafilepicker>): MediafilepickerDeligate;
-    assetsPickerControllerDidFinishPickingAssets(picker: any, assetArray: NSArray<any>): void;
+import { Observable } from 'tns-core-modules/data/observable';
+import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
+import * as utils from "tns-core-modules/utils/utils";
+export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
+    private _mediaPickerIQDeligate;
+    private _mediaPickerDocumentDeligate;
+    collections: typeof utils.ios.collections;
+    results: any;
+    msg: any;
+    constructor();
+    openImagePicker(params: ImagePickerOptions): void;
+    openVideoPicker(params: VideoPickerOptions): void;
+    openAudioPicker(params: AudioPickerOptions): void;
+    openFilePicker(params: FilePickerOptions): void;
+    copyPHImageToAppDirectory(rawData: PHAsset, fileName: string): Promise<{}>;
+    copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
+    convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
+    copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
+    private presentViewController(controller);
 }
-export declare class Mediafilepicker extends Common implements CommonFilePicker {
-    output: string;
-    startFilePicker(params: MediaFilepickerOptions): void;
-    getFiles(assetArray: NSArray<any>): void;
-    handleJob(assetArray: NSArray<any>): Promise<{}>;
-    copyImageFiles(rawData: PHAsset, fileName: string): Promise<{}>;
-    copyVideoFiles(url: NSURL, fileName: any): Promise<{}>;
+export declare class MediafilepickerIQMediaPickerControllerDelegate extends NSObject implements IQMediaPickerControllerDelegate {
+    static ObjCProtocols: {
+        prototype: IQMediaPickerControllerDelegate;
+    }[];
+    private _owner;
+    static initWithOwner(owner: WeakRef<Mediafilepicker>): MediafilepickerIQMediaPickerControllerDelegate;
+    mediaPickerControllerDidFinishMedias(controller: IQMediaPickerController, selectedMedias: IQMediaPickerSelection): void;
+    mediaPickerControllerDidCancel(controller: IQMediaPickerController): void;
 }

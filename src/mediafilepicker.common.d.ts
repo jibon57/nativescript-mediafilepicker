@@ -1,41 +1,54 @@
-import { Observable } from 'tns-core-modules/data/observable/observable';
-export declare class Common extends Observable {
-    constructor();
+export declare class MediaPickerInterface {
+    openImagePicker(params: ImagePickerOptions): void;
+    openVideoPicker(params: VideoPickerOptions): void;
+    openAudioPicker(params: AudioPickerOptions): void;
+    openFilePicker(params: FilePickerOptions): void;
 }
-export interface CommonFilePicker {
-    output: any;
-    startFilePicker(params: MediaFilepickerOptions): any;
-}
-export interface MediaFilepickerOptions {
+export interface ImagePickerOptions {
     android?: {
-        mxcount?: number;
-        setSelectedFiles?: string;
-        setActivityTheme?: string;
-        enableImagePicker?: boolean;
-        enableVideoPicker?: boolean;
-        enableDocSupport?: boolean;
-        enableCameraSupport?: boolean;
-        showGifs?: boolean;
-        pickFile?: boolean;
-        addFileSupport?: {
-            title?: string;
-            type?: any;
-            icon?: string;
-        };
+        isNeedCamera?: boolean;
+        maxNumberFiles?: Number;
+        isNeedFolderList?: boolean;
     };
     ios?: {
-        displaySelectionInfoToolbar?: boolean;
-        displayAlbumsNumberOfAssets?: boolean;
-        title?: string;
-        mediaTypes?: string;
-        customNavigationBarPrompt?: string;
-        colsInPortrait?: number;
-        colsInLandscape?: number;
-        minimumInteritemSpacing?: number;
-        allowsMultipleSelection?: boolean;
-        confirmSingleSelection?: boolean;
-        confirmSingleSelectionPrompt?: string;
-        showCameraButton?: boolean;
-        autoSelectCameraImages?: boolean;
+        isCaptureMood?: boolean;
+        maxNumberFiles?: number;
+    };
+}
+export interface VideoPickerOptions {
+    android?: {
+        isNeedCamera?: boolean;
+        maxNumberFiles?: number;
+        isNeedFolderList?: boolean;
+        maxDuration?: number;
+        videoQuality?: number;
+    };
+    ios?: {
+        isCaptureMood?: boolean;
+        maxNumberFiles?: number;
+        videoMaximumDuration?: number;
+        allowedVideoQualities?: Array<string>;
+    };
+}
+export interface AudioPickerOptions {
+    android?: {
+        isNeedRecorder?: boolean;
+        maxNumberFiles?: number;
+        isNeedFolderList?: boolean;
+        maxSize?: number;
+    };
+    ios?: {
+        isCaptureMood?: boolean;
+        maxNumberFiles?: number;
+        audioMaximumDuration?: number;
+    };
+}
+export interface FilePickerOptions {
+    android?: {
+        extensions: Array<string>;
+        maxNumberFiles?: number;
+    };
+    ios?: {
+        extensions: Array<string>;
     };
 }

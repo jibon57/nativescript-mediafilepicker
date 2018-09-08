@@ -2,7 +2,6 @@
 *.ts
 !*.d.ts
 tsconfig.json
-package-lock.json
 scripts/*
 platforms/android/*
 !platforms/android/include.gradle

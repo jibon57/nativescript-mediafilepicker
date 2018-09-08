@@ -1,1 +1,2 @@
-pod 'GMImagePicker', git: 'https://github.com/codelathe/GMImagePicker.git', branch: 'master'
+platform :ios, '9.0'
+pod 'IQMediaPickerController'

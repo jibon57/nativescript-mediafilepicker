@@ -23,7 +23,6 @@ module.exports = env => {
 
     const platforms = ["ios", "android"];
     const projectRoot = __dirname;
-    nsWebpack.loadAdditionalPlugins({ projectDir: projectRoot });
 
     // Default destination inside platforms/<platform>/...
     const dist = resolve(projectRoot, nsWebpack.getAppPath(platform, projectRoot));
@@ -37,19 +36,17 @@ module.exports = env => {
         appResourcesPath = "app/App_Resources",
 
         // You can provide the following flags when running 'tns run android|ios'
-        aot, // --env.aot
         snapshot, // --env.snapshot
         uglify, // --env.uglify
         report, // --env.report
+        sourceMap, // --env.sourceMap
     } = env;
 
     const appFullPath = resolve(projectRoot, appPath);
     const appResourcesFullPath = resolve(projectRoot, appResourcesPath);
 
-    const entryModule = aot ?
-        nsWebpack.getAotEntryModule(appFullPath) : 
-        `${nsWebpack.getEntryModule(appFullPath)}.ts`;
-    const entryPath = `.${sep}${entryModule}`;
+    const entryModule = nsWebpack.getEntryModule(appFullPath);
+    const entryPath = `.${sep}${entryModule}.ts`;
 
     const config = {
         mode: uglify ? "production" : "development",
@@ -84,9 +81,11 @@ module.exports = env => {
             alias: {
                 '~': appFullPath
             },
-            symlinks: true
+            // don't resolve symlinks to symlinked modules
+            symlinks: false
         },
         resolveLoader: {
+            // don't resolve symlinks to symlinked loaders
             symlinks: false
         },
         node: {
@@ -97,8 +96,8 @@ module.exports = env => {
             "fs": "empty",
             "__dirname": false,
         },
-        devtool: "none",
-        optimization: {
+        devtool: sourceMap ? "inline-source-map" : "none",
+        optimization:  {
             splitChunks: {
                 cacheGroups: {
                     vendor: {
@@ -108,6 +107,7 @@ module.exports = env => {
                             const moduleName = module.nameForCondition ? module.nameForCondition() : '';
                             return /[\\/]node_modules[\\/]/.test(moduleName) ||
                                     appComponents.some(comp => comp === moduleName);
+
                         },
                         enforce: true,
                     },
@@ -146,65 +146,51 @@ module.exports = env => {
                         {
                             loader: "nativescript-dev-webpack/bundle-config-loader",
                             options: {
-                                registerPages: false,
                                 loadCss: !snapshot, // load the application css if in debug mode
                             }
                         },
                     ].filter(loader => !!loader)
                 },
 
-                { test: /\.html$|\.xml$/, use: "raw-loader" },
+                { test: /\.(html|xml)$/, use: "nativescript-dev-webpack/xml-namespace-loader"},
 
-                // tns-core-modules reads the app.css and its imports using css-loader
                 {
-                    test: /[\/|\\]app\.css$/,
-                    use: {
-                        loader: "css-loader",
-                        options: { minimize: false, url: false },
-                    }
+                    test: /\.css$/,
+                    use: { loader: "css-loader", options: { minimize: false, url: false } }
                 },
+
                 {
-                    test: /[\/|\\]app\.scss$/,
+                    test: /\.scss$/,
                     use: [
                         { loader: "css-loader", options: { minimize: false, url: false } },
                         "sass-loader"
                     ]
                 },
 
-                // Angular components reference css files and their imports using raw-loader
-                { test: /\.css$/, exclude: /[\/|\\]app\.css$/, use: "raw-loader" },
-                { test: /\.scss$/, exclude: /[\/|\\]app\.scss$/, use: ["raw-loader", "resolve-url-loader", "sass-loader"] },
-
-                // Compile TypeScript files with ahead-of-time compiler.
                 {
-                    test: /.ts$/, use: [
-                        "nativescript-dev-webpack/moduleid-compat-loader",
-                        "@ngtools/webpack",
-                    ]
+                    test: /\.ts$/,
+                    use: {
+                        loader: "awesome-typescript-loader",
+                        options: { configFileName: "tsconfig.esm.json" },
+                    }
                 },
-
-                // Mark files inside `@angular/core` as using SystemJS style dynamic imports.
-                // Removing this will cause deprecation warnings to appear.
-                {
-                    test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-                    parser: { system: true },
-                },
-            ],
+            ]
         },
         plugins: [
             // Define useful constants like TNS_WEBPACK
             new webpack.DefinePlugin({
                 "global.TNS_WEBPACK": "true",
+                "process": undefined,
             }),
             // Remove all files from the out dir.
             new CleanWebpackPlugin([ `${dist}/**/*` ]),
             // Copy native app resources to out dir.
             new CopyWebpackPlugin([
-                {
-                    from: `${appResourcesFullPath}/${appResourcesPlatformDir}`,
-                    to: `${dist}/App_Resources/${appResourcesPlatformDir}`,
-                    context: projectRoot
-                },
+              {
+                from: `${appResourcesFullPath}/${appResourcesPlatformDir}`,
+                to: `${dist}/App_Resources/${appResourcesPlatformDir}`,
+                context: projectRoot
+              },
             ]),
             // Copy assets to out dir. Add your own globs as needed.
             new CopyWebpackPlugin([
@@ -220,15 +206,9 @@ module.exports = env => {
             // For instructions on how to set up workers with webpack
             // check out https://github.com/nativescript/worker-loader
             new NativeScriptWorkerPlugin(),
-            // AngularCompilerPlugin with augmented NativeScript filesystem to handle platform specific resource resolution.
-            new nsWebpack.NativeScriptAngularCompilerPlugin({
-                entryModule: resolve(appPath, "app.module#AppModule"),
-                tsConfigPath: join(__dirname, "tsconfig.esm.json"),
-                skipCodeGeneration: !aot,
-                platformOptions: {
-                    platform,
-                    platforms,
-                },
+            new nsWebpack.PlatformFSPlugin({
+                platform,
+                platforms,
             }),
             // Does IPC communication with the {N} CLI to notify events when running in watch mode.
             new nsWebpack.WatchStateLoggerPlugin(),
@@ -250,13 +230,7 @@ module.exports = env => {
         config.plugins.push(new nsWebpack.NativeScriptSnapshotPlugin({
             chunk: "vendor",
             requireModules: [
-                "reflect-metadata",
-                "@angular/platform-browser",
-                "@angular/core",
-                "@angular/common",
-                "@angular/router",
-                "nativescript-angular/platform-static",
-                "nativescript-angular/router",
+                "tns-core-modules/bundle-entry-points",
             ],
             projectRoot,
             webpackConfig: config,
