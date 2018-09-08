@@ -21,7 +21,7 @@ This plugin will allow user to pick video & image files from their device. User 
 ## Installation
 
 ```javascript
-tns plugin add nativescript-mediafilepicker
+tns plugin add nativescript-mediafilepicker@1.0.7
 ```
 
 ## Usage 
