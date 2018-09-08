@@ -46,7 +46,7 @@ let options: ImagePickerOptions = {
         maxNumberFiles: 10,
         isNeedFolderList: true
     }, ios: {
-        isCaptureMood: true,
+        isCaptureMood: false,
         maxNumberFiles: 10
     }
 };
@@ -87,7 +87,7 @@ let options: VideoPickerOptions = {
 
     },
     ios: {
-        isCaptureMood: true,
+        isCaptureMood: false,
         videoMaximumDuration: 10,
         allowedVideoQualities: allowedVideoQualities
     }
