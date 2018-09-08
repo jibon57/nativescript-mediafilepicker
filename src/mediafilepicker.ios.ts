@@ -260,6 +260,10 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             let docuPath = fs.knownFolders.documents();
             let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
 
+            if (fs.File.exists(docuPath.path + "/filepicker/" + fileName)) {
+                docuPath.getFile("filepicker/" + fileName).remove();
+            }
+
             let output = {
                 status: false,
                 msg: 'error',
