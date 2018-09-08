@@ -7,7 +7,7 @@ A complete file picker solution for NativeScript. You will be able to pickup any
 * Android: [MultiType-FilePicker](https://github.com/fishwjy/MultiType-FilePicker)
 * iOS: [IQMediaPickerController](https://github.com/hackiftekhar/IQMediaPickerController)
 
-
+Old version (v1.X) can be found from [this branch](https://github.com/jibon57/nativescript-mediafilepicker/tree/v1)
 
 **Features:**
 
