@@ -174,6 +174,7 @@ export interface FilePickerOptions {
 ## Screenshots
 
 **Android**
+
 ![Android](/screenshots/android/picker.jpg)
 ![Android](/screenshots/android/pick_img1.gif)
 ![Android](/screenshots/android/pick_vid.png)
@@ -181,12 +182,16 @@ export interface FilePickerOptions {
 ![Android](/screenshots/android/pick_file.png)
 ![Android](/screenshots/android/pick_photo_folder.png)
 
+
+
 **iOS**
+
 ![ios](/screenshots/ios/VideoCapture.png)
 ![ios](/screenshots/ios/PhotoCapture.png)
 ![ios](/screenshots/ios/AudioCapture.png)
 ![ios](/screenshots/ios/PhotoVideoPicker.png)
 ![ios](/screenshots/ios/AudioPicker.png)
+
 
 ## License
 
