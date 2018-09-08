@@ -17,7 +17,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
 export interface ImagePickerOptions {
     android?: {
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
     };
     ios?: {
@@ -28,23 +28,24 @@ export interface ImagePickerOptions {
 export interface VideoPickerOptions {
     android?: {
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
-        maxDuration?: Number;
+        maxDuration?: number;
+        videoQuality?: number;
     };
     ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
-        allowedVideoQualities?: Array<string>;//https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        allowedVideoQualities?: Array<string>; //https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
     };
 }
 export interface AudioPickerOptions {
     android?: {
         isNeedRecorder?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
-        maxSize?: Number;
+        maxSize?: number;
     };
     ios?: {
         isCaptureMood?: boolean;
@@ -54,10 +55,10 @@ export interface AudioPickerOptions {
 }
 export interface FilePickerOptions {
     android?: {
-        extensions: Array<String>;
-        maxNumberFiles?: Number;
+        extensions: Array<string>;
+        maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string>;//https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; //https://developer.apple.com/documentation/mobilecoreservices/uttype
     };
 }

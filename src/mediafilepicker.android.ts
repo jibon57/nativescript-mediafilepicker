@@ -3,7 +3,7 @@ import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPick
 import * as app from 'tns-core-modules/application';
 const permissions = require('nativescript-permissions');
 
-declare const com, java, android;
+declare const java;
 
 const AudioPickActivity = com.vincent.filepicker.activity.AudioPickActivity;
 const ImagePickActivity = com.vincent.filepicker.activity.ImagePickActivity;
@@ -31,11 +31,11 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         intent = new Intent(app.android.foregroundActivity, ImagePickActivity.class);
 
-        options.isNeedCamera ? intent.putExtra("IsNeedCamera", true) : intent.putExtra("IsNeedCamera", false);
+        options.isNeedCamera ? intent.putExtra(ImagePickActivity.IS_NEED_CAMERA, true) : intent.putExtra(ImagePickActivity.IS_NEED_CAMERA, false);
 
         options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
 
-        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+        options.isNeedFolderList ? intent.putExtra(ImagePickActivity.IS_NEED_FOLDER_LIST, true) : intent.putExtra(ImagePickActivity.IS_NEED_FOLDER_LIST, false);
 
         pickerType = Constant.REQUEST_CODE_PICK_IMAGE;
 
@@ -51,12 +51,21 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         intent = new Intent(app.android.foregroundActivity, VideoPickActivity.class);
 
-        options.isNeedCamera ? intent.putExtra("IsNeedCamera", true) : intent.putExtra("IsNeedCamera", false);
+        options.isNeedCamera ? intent.putExtra(VideoPickActivity.IS_NEED_CAMERA, true) : intent.putExtra(VideoPickActivity.IS_NEED_CAMERA, false);
 
         options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
 
-        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+        options.isNeedFolderList ? intent.putExtra(VideoPickActivity.IS_NEED_FOLDER_LIST, true) : intent.putExtra(VideoPickActivity.IS_NEED_FOLDER_LIST, false);
 
+        if (options.maxDuration > 0) {
+            intent.putExtra(Constant.MAX_VIDEO_DURATION, options.maxDuration);
+        }
+
+        intent.putExtra(Constant.VIDEO_QUALITY, 1);
+
+        if (options.videoQuality === 0) {
+            intent.putExtra(Constant.VIDEO_QUALITY, 0);
+        }
 
         pickerType = Constant.REQUEST_CODE_PICK_VIDEO;
 
@@ -72,11 +81,17 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         intent = new Intent(app.android.foregroundActivity, AudioPickActivity.class);
 
-        options.isNeedRecorder ? intent.putExtra("IsNeedRecorder", true) : intent.putExtra("IsNeedRecorder", false);
+        options.isNeedRecorder ? intent.putExtra(AudioPickActivity.IS_NEED_RECORDER, true) : intent.putExtra(AudioPickActivity.IS_NEED_RECORDER, false);
 
         options.maxNumberFiles ? intent.putExtra(Constant.MAX_NUMBER, options.maxNumberFiles) : intent.putExtra(Constant.MAX_NUMBER, 99);
 
-        options.isNeedFolderList ? intent.putExtra("isNeedFolderList", true) : intent.putExtra("isNeedFolderList", false);
+        options.isNeedFolderList ? intent.putExtra(AudioPickActivity.IS_NEED_FOLDER_LIST, true) : intent.putExtra(AudioPickActivity.IS_NEED_FOLDER_LIST, false);
+
+        if (options.maxSize > 0) {
+            intent.putExtra(Constant.MAX_AUDIO_SIZE, options.maxSize);
+        }
+
+        intent.putExtra(AudioPickActivity.IS_TAKEN_AUTO_SELECTED, true);
 
         pickerType = Constant.REQUEST_CODE_PICK_AUDIO;
 
@@ -132,7 +147,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             app.android.off(app.AndroidApplication.activityResultEvent, onResult);
             t.handleResults(args.requestCode, args.resultCode, args.intent);
         }
-
 
     }
 

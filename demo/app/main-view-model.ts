@@ -42,7 +42,7 @@ export class HelloWorldModel extends Observable {
 
                     if (result.file && app.ios && !options.ios.isCaptureMood) {
 
-                        // We can copy the image to app directory for futher proccess.
+                        // We can copy the image to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
                         /* let fileName = file.replace(/^.*[\/]/, '');
                         mediafilepicker.copyPHImageToAppDirectory(result.rawData, fileName).then((res: any) => {
                             console.dir(res);
@@ -81,16 +81,24 @@ export class HelloWorldModel extends Observable {
      */
     public openVideoPicker() {
 
+        let allowedVideoQualities = [];
+
+        if (app.ios) {
+            allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  //get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        }
+
         let options: VideoPickerOptions = {
             android: {
                 isNeedCamera: true,
                 maxNumberFiles: 2,
-                isNeedFolderList: true
+                isNeedFolderList: true,
+                maxDuration: 20,
+
             },
             ios: {
                 isCaptureMood: true,
                 videoMaximumDuration: 10,
-                allowedVideoQualities: [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh] //get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+                allowedVideoQualities: allowedVideoQualities
             }
         };
         let mediafilepicker = new Mediafilepicker(); mediafilepicker.openVideoPicker(options);
@@ -142,7 +150,8 @@ export class HelloWorldModel extends Observable {
             android: {
                 isNeedRecorder: true,
                 maxNumberFiles: 2,
-                isNeedFolderList: true
+                isNeedFolderList: true,
+                maxSize: 102400 //Maximum size in bytes
             },
             ios: {
                 isCaptureMood: false,
@@ -173,13 +182,21 @@ export class HelloWorldModel extends Observable {
      * openCustomFiles
      */
     public openCustomFilesPicker() {
+        let extensions = [];
+
+        if (app.ios) {
+            extensions = [kUTTypePDF, kUTTypeText]; //you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
+        } else {
+            extensions = ['txt', 'pdf'];
+        }
+
         let options: FilePickerOptions = {
             android: {
-                extensions: ['txt', 'pdf'],
+                extensions: extensions,
                 maxNumberFiles: 2
             },
             ios: {
-                extensions: [kUTTypePDF, kUTTypeText] //you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
+                extensions: extensions
             }
         };
 

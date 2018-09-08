@@ -20,9 +20,11 @@ export interface VideoPickerOptions {
 
     android?: {
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
-        maxDuration?: Number;
+        maxDuration?: number;
+        videoQuality?: number;
+
     }, ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
@@ -34,9 +36,9 @@ export interface VideoPickerOptions {
 export interface AudioPickerOptions {
     android?: {
         isNeedRecorder?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
-        maxSize?: Number;
+        maxSize?: number;
     }, ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
@@ -46,8 +48,8 @@ export interface AudioPickerOptions {
 
 export interface FilePickerOptions {
     android?: {
-        extensions: Array<String>,
-        maxNumberFiles?: Number;
+        extensions: Array<string>,
+        maxNumberFiles?: number;
     }, ios?: {
         extensions: Array<string> //https://developer.apple.com/documentation/mobilecoreservices/uttype
     };

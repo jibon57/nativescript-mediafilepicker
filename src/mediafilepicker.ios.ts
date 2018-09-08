@@ -135,6 +135,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
     /**
      * copyPHImageToAppDirectory
+     * This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
      */
     public copyPHImageToAppDirectory(rawData: PHAsset, fileName: string) {
 
@@ -180,6 +181,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
     /**
      * copyPHVideoToAppDirectory
+     * This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
      */
     public copyPHVideoToAppDirectory(asset: AVURLAsset, fileName) {
 
@@ -247,10 +249,14 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
     /**
      * copyUIImageToAppDirectory
+     * This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
      */
     public copyUIImageToAppDirectory(image: UIImage, fileName: any) {
+
         return new Promise(function (resolve, reject) {
+
             let data = UIImageJPEGRepresentation(image, 1);
+
             let docuPath = fs.knownFolders.documents();
             let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
 
@@ -259,6 +265,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 msg: 'error',
                 file: ''
             };
+
             try {
                 data.writeToFileAtomically(targetImgeURL, true);
                 output = {
@@ -281,8 +288,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null);
     }
-
-
 
 }
 
