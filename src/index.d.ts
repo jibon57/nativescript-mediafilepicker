@@ -10,6 +10,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
     convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
     copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
+    greet(): string;
 }
 
 export interface ImagePickerOptions {
@@ -35,7 +36,7 @@ export interface VideoPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
-        allowedVideoQualities?: Array<string>; //https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
     };
 }
 export interface AudioPickerOptions {
@@ -57,6 +58,6 @@ export interface FilePickerOptions {
         maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string>; //https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
     };
 }

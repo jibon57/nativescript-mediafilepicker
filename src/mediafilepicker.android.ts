@@ -275,4 +275,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }, 1000);
     }
 
+    public greet() {
+        return "Hello, NS";
+    }
+
 }

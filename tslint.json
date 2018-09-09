@@ -53,5 +53,12 @@
             "check-separator",
             "check-type"
         ]
+    },
+    "linterOptions": {
+        "exclude": [
+            "**/typingz/**",
+            "**/node_modules/**",
+            "**/platforms/**"
+        ]
     }
 }

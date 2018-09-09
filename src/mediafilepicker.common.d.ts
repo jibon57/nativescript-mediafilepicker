@@ -3,6 +3,7 @@ export declare class MediaPickerInterface {
     openVideoPicker(params: VideoPickerOptions): void;
     openAudioPicker(params: AudioPickerOptions): void;
     openFilePicker(params: FilePickerOptions): void;
+    greet(): void;
 }
 export interface ImagePickerOptions {
     android?: {

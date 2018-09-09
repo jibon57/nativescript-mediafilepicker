@@ -54,17 +54,17 @@ export class HelloWorldModel extends Observable {
                         // or can get UIImage to display
                         mediafilepicker.convertPHImageToUIImage(result.rawData).then(res => {
                             console.log(res);
-                        })
+                        });
                     } else if (result.file && app.ios) {
-                        //So we have taken image & will get UIImage
+                        // So we have taken image & will get UIImage
 
-                        //We can copy it to app directory, if need
+                        // We can copy it to app directory, if need
                         let fileName = "myTmpImage.jpg";
                         mediafilepicker.copyUIImageToAppDirectory(result.rawData, fileName).then((res: any) => {
                             console.dir(res);
                         }).catch(e => {
                             console.dir(e);
-                        })
+                        });
                     }
 
                 }
@@ -91,7 +91,7 @@ export class HelloWorldModel extends Observable {
         let allowedVideoQualities = [];
 
         if (app.ios) {
-            allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  //get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+            allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  // get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
         }
 
         let options: VideoPickerOptions = {
@@ -121,7 +121,7 @@ export class HelloWorldModel extends Observable {
                 for (let i = 0; i < results.length; i++) {
 
                     let result = results[i];
-                    console.dir(result)
+                    console.dir(result);
 
                     let file = result.file;
 
@@ -133,14 +133,15 @@ export class HelloWorldModel extends Observable {
 
                         setTimeout(() => {
                             mediafilepicker.copyPHVideoToAppDirectory(result.urlAsset, fileName).then(res => {
-                                console.dir(res)
+                                console.dir(res);
                             }).catch(e => {
                                 console.dir(e);
-                            })
-                        }, 1000)
+                            });
+                        }, 1000);
 
                     } else if (result.file && app.ios) {
-                        //or we will get our own recorded video :) 
+                        // or we will get our own recorded video :)
+
                         console.log(file);
                     }
 
@@ -170,7 +171,7 @@ export class HelloWorldModel extends Observable {
                 isNeedRecorder: true,
                 maxNumberFiles: 2,
                 isNeedFolderList: true,
-                maxSize: 102400 //Maximum size in bytes
+                maxSize: 102400 // Maximum size in bytes
             },
             ios: {
                 isCaptureMood: false,
@@ -216,7 +217,7 @@ export class HelloWorldModel extends Observable {
         let extensions = [];
 
         if (app.ios) {
-            extensions = [kUTTypePDF, kUTTypeText]; //you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
+            extensions = [kUTTypePDF, kUTTypeText]; // you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
         } else {
             extensions = ['txt', 'pdf'];
         }

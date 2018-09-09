@@ -17,6 +17,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
     copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
     private presentViewController(controller);
+    greet(): string;
 }
 export declare class MediafilepickerIQMediaPickerControllerDelegate extends NSObject implements IQMediaPickerControllerDelegate {
     static ObjCProtocols: {

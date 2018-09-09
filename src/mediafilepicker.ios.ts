@@ -175,8 +175,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                     }
 
                 }
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -210,7 +210,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         status: true,
                         msg: 'success',
                         file: targetURL.toString()
-                    }
+                    };
 
                     resolve(output);
                 } else {
@@ -222,7 +222,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 reject(output);
             }
 
-        })
+        });
 
     }
 
@@ -243,8 +243,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 } else {
                     reject("something went wrong!");
                 }
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -283,7 +283,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 output.msg = e;
                 reject(output);
             }
-        })
+        });
     }
 
     private presentViewController(controller) {
@@ -291,6 +291,10 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         let app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
 
         app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null);
+    }
+
+    public greet() {
+        return "Hello, NS";
     }
 
 }
@@ -313,7 +317,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
         let t = this._owner.get(), output = [];
 
-        //either video or image
+        // either video or image
         if (selectedMedias.selectedAssets.count > 0) {
 
             let results = selectedMedias.selectedAssets;
@@ -322,7 +326,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
                 let result: PHAsset = results[i];
 
-                if (result.mediaType == PHAssetMediaTypeImage) {
+                if (result.mediaType === PHAssetMediaTypeImage) {
 
                     let _uriRequestOptions = PHImageRequestOptions.alloc().init();
                     _uriRequestOptions.synchronous = true;
@@ -340,11 +344,11 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                             type: 'image',
                             file: fileUrl,
                             rawData: result
-                        }
+                        };
                         output.push(file);
 
                     });
-                } else if (result.mediaType == PHAssetMediaTypeVideo) {
+                } else if (result.mediaType === PHAssetMediaTypeVideo) {
 
 
                     let options = PHVideoRequestOptions.new();
@@ -366,7 +370,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                             urlAsset: urlAsset
                         };
                         output.push(file);
-                    })
+                    });
                 }
 
             }
@@ -390,7 +394,8 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
             }
         }
-        // should be something recoded :D 
+        // should be something recoded :D
+
         else if (selectedMedias.selectedAssetsURL.count > 0) {
 
             let results = selectedMedias.selectedAssetsURL;
