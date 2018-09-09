@@ -7,11 +7,9 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     openAudioPicker(params: AudioPickerOptions): void;
     openFilePicker(params: FilePickerOptions): void;
     copyPHImageToAppDirectory(rawData: PHAsset, fileName: string): Promise<{}>;
-    copyPHVideoToAppDirectory(url: NSURL, fileName: any): Promise<{}>;
+    copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
     convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
     copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
-    private callIntent(intent, pickerType);
-    private handleResults(requestCode, resultCode, data);
 }
 
 export interface ImagePickerOptions {
