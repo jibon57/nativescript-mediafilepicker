@@ -183,7 +183,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * copyPHVideoToAppDirectory
      * This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
      */
-    public copyPHVideoToAppDirectory(asset: AVURLAsset, fileName) {
+    public copyPHVideoToAppDirectory(urlAsset: AVURLAsset, fileName) {
 
         return new Promise(function (resolve, reject) {
 
@@ -202,7 +202,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             let targetURL = NSURL.fileURLWithPath(docuPath.path + "/filepicker/" + fileName);
 
             try {
-                let write = NSFileManager.defaultManager.copyItemAtURLToURLError(asset.URL, targetURL);
+                let write = NSFileManager.defaultManager.copyItemAtURLToURLError(urlAsset.URL, targetURL);
 
                 if (write) {
 
