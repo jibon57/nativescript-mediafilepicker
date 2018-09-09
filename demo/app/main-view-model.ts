@@ -75,6 +75,12 @@ export class HelloWorldModel extends Observable {
             let msg = res.object.get('msg');
             console.log(msg);
         });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
     }
 
     /**
@@ -142,6 +148,16 @@ export class HelloWorldModel extends Observable {
             }
 
         });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
     }
 
     /**
@@ -180,6 +196,16 @@ export class HelloWorldModel extends Observable {
                 }
             }
 
+        });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
         });
     }
 
@@ -222,6 +248,16 @@ export class HelloWorldModel extends Observable {
                 }
             }
 
+        });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
         });
     }
 }

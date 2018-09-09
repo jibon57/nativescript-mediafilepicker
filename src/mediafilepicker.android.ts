@@ -256,12 +256,23 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
             this.results = output;
 
-            t.notify({
-                eventName: 'getFiles',
-                object: t
-            });
+            if (output.length > 0) {
 
-        }, 500);
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
+            } else {
+
+                t.msg = 'Picker cancel or no file has been selected.';
+                t.notify({
+                    eventName: 'cancel',
+                    object: t
+                });
+            }
+
+        }, 1000);
     }
 
 }

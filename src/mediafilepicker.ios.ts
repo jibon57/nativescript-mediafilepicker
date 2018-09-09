@@ -432,10 +432,23 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
             t.results = output;
 
-            t.notify({
-                eventName: 'getFiles',
-                object: t
-            });
+            if (output.length > 0) {
+
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
+            } else {
+
+                t.msg = "No files!";
+
+                t.notify({
+                    eventName: 'error',
+                    object: t
+                });
+            }
+
 
         }, 1000);
 
