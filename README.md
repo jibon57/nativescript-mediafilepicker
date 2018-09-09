@@ -119,7 +119,7 @@ let options: AudioPickerOptions = {
         isNeedRecorder: true,
         maxNumberFiles: 2,
         isNeedFolderList: true,
-        maxSize: 102400 //Maximum size in bytes
+        maxSize: 102400 //Maximum size of recorded file in bytes. 5900 = ~ 1 second
     },
     ios: {
         isCaptureMood: false,
