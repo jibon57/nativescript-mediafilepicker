@@ -34,6 +34,14 @@ tns plugin add nativescript-mediafilepicker
 ## Usage (Please check demo project for details)
 
 **Import**
+
+JavaScript:
+```javascript
+var mPicker = require("nativescript-mediafilepicker");
+var mediafilepicker = new mPicker.Mediafilepicker();
+```
+
+TS:
 ```javascript
 import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
 ```
