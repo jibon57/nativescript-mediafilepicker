@@ -51,5 +51,6 @@ export interface FilePickerOptions {
     };
     ios?: {
         extensions: Array<string>;
+        multipleSelection?: boolean;
     };
 }

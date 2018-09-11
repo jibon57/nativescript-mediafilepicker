@@ -59,5 +59,6 @@ export interface FilePickerOptions {
     };
     ios?: {
         extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
+        multipleSelection?: boolean;
     };
 }

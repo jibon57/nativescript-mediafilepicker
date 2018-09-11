@@ -228,7 +228,8 @@ export class HelloWorldModel extends Observable {
                 maxNumberFiles: 2
             },
             ios: {
-                extensions: extensions
+                extensions: extensions,
+                multipleSelection: true
             }
         };
 

@@ -59,7 +59,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            })
+            });
 
         } else {
             this.presentViewController(controller);
@@ -111,7 +111,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            })
+            });
 
         } else {
             this.presentViewController(controller);
@@ -154,7 +154,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            })
+            });
         } else {
             this.presentViewController(controller);
         }
@@ -176,6 +176,10 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let controller = UIDocumentPickerViewController.alloc().initWithDocumentTypesInMode(documentTypes, UIDocumentPickerMode.Import);
         controller.delegate = this._mediaPickerDocumentDeligate;
+
+        if (options.multipleSelection) {
+            controller.allowsMultipleSelection = true;
+        }
 
         this.presentViewController(controller);
     }
@@ -422,7 +426,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
             }
         }
-        // let's check if audio
+        // let's check if audio ;)
         else if (selectedMedias.selectedAudios.count > 0) {
 
             let results = selectedMedias.selectedAudios;
@@ -461,6 +465,8 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
             }
         }
+        // this should be image captured :D
+
         else if (selectedMedias.selectedImages.count) {
 
             let results = selectedMedias.selectedImages;
@@ -481,7 +487,6 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
         }
 
         setTimeout(() => {
-
             t.results = output;
 
             if (output.length > 0) {
@@ -492,15 +497,13 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                 });
 
             } else {
-
-                t.msg = "No files!";
+                t.msg = "No file!";
 
                 t.notify({
                     eventName: 'error',
                     object: t
                 });
             }
-
 
         }, 1000);
 
@@ -536,18 +539,72 @@ class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocume
 
         setTimeout(() => {
 
-            let file = {
-                type: 'normalFile',
-                file: url.absoluteString,
-                rawData: url
-            };
+            if (url) {
+                let file = {
+                    type: 'normalFile',
+                    file: url.absoluteString,
+                    rawData: url
+                };
 
-            t.results = [file];
+                t.results = [file];
 
-            t.notify({
-                eventName: 'getFiles',
-                object: t
-            });
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
+            } else {
+                t.msg = "No file!";
+
+                t.notify({
+                    eventName: 'error',
+                    object: t
+                });
+            }
+
+        }, 1000);
+
+    }
+    documentPickerDidPickDocumentsAtURLs(controller: UIDocumentPickerViewController, urls: NSArray<NSURL>) {
+
+        let output = [];
+        let t = this._owner.get();
+
+        if (urls.count > 0) {
+
+            for (let i = 0; i < urls.count; i++) {
+                let url = urls[i];
+
+                let file = {
+                    type: 'normalFile',
+                    file: url.absoluteString,
+                    rawData: url
+                };
+
+                output.push(file);
+
+            }
+        }
+
+        setTimeout(() => {
+
+            t.results = output;
+
+            if (output.length > 0) {
+
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
+            } else {
+                t.msg = "No file!";
+
+                t.notify({
+                    eventName: 'error',
+                    object: t
+                });
+            }
 
         }, 1000);
 

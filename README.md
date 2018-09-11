@@ -172,7 +172,8 @@ let options: FilePickerOptions = {
         maxNumberFiles: 2
     },
     ios: {
-        extensions: extensions
+        extensions: extensions,
+        multipleSelection: true
     }
 };
 
@@ -204,7 +205,7 @@ openAudioPicker(params: AudioPickerOptions): void;
 openFilePicker(params: FilePickerOptions): void;
 
 //iOS only
-copyPHImageToAppDirectory(rawData: PHAsset, fileName: string): Promise<{}>;
+copyPHImageToAppDirectory(rawData: PHAsset, fileName: any): Promise<{}>;
 copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
 convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
 copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;    
@@ -258,7 +259,8 @@ export interface FilePickerOptions {
         maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string>; //https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
+        multipleSelection?: boolean;
     };
 }
 ```

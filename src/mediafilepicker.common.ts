@@ -52,10 +52,11 @@ export interface AudioPickerOptions {
 
 export interface FilePickerOptions {
     android?: {
-        extensions: Array<string>,
+        extensions: Array<string>;
         maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string> // https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
+        multipleSelection?: boolean;
     };
 }
