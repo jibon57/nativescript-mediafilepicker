@@ -30,7 +30,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      */
     public openImagePicker(params: ImagePickerOptions) {
 
-        let options = params.ios;
+        let options = params.ios, t = this;
 
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
@@ -47,8 +47,23 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             controller.maximumItemCount = options.maxNumberFiles;
         }
 
+        if (!options.isCaptureMood) {
+            PHPhotoLibrary.requestAuthorization(function (status) {
 
-        this.presentViewController(controller);
+                if (status === PHAuthorizationStatus.Authorized) {
+                    t.presentViewController(controller);
+                } else {
+                    t.msg = "Permission Error!";
+                    t.notify({
+                        eventName: 'error',
+                        object: t
+                    });
+                }
+            })
+
+        } else {
+            this.presentViewController(controller);
+        }
     }
 
     /**
@@ -56,7 +71,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      */
     public openVideoPicker(params: VideoPickerOptions) {
 
-        let options = params.ios;
+        let options = params.ios, t = this;
+
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
         controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
@@ -83,7 +99,23 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         }
 
-        this.presentViewController(controller);
+        if (!options.isCaptureMood) {
+            PHPhotoLibrary.requestAuthorization(function (status) {
+
+                if (status === PHAuthorizationStatus.Authorized) {
+                    t.presentViewController(controller);
+                } else {
+                    t.msg = "Permission Error!";
+                    t.notify({
+                        eventName: 'error',
+                        object: t
+                    });
+                }
+            })
+
+        } else {
+            this.presentViewController(controller);
+        }
     }
 
     /**
@@ -91,7 +123,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      */
     public openAudioPicker(params: AudioPickerOptions) {
 
-        let options = params.ios;
+        let options = params.ios, t = this;
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
         controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
@@ -110,7 +142,22 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             controller.audioMaximumDuration = options.audioMaximumDuration;
         }
 
-        this.presentViewController(controller);
+        if (!options.isCaptureMood) {
+            MPMediaLibrary.requestAuthorization(function (status) {
+
+                if (status === MPMediaLibraryAuthorizationStatus.Authorized) {
+                    t.presentViewController(controller);
+                } else {
+                    t.msg = "Permission Error!";
+                    t.notify({
+                        eventName: 'error',
+                        object: t
+                    });
+                }
+            })
+        } else {
+            this.presentViewController(controller);
+        }
     }
 
     /**

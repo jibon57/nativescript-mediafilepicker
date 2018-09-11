@@ -20,7 +20,7 @@ export class HelloWorldModel extends Observable {
                 maxNumberFiles: 10,
                 isNeedFolderList: true
             }, ios: {
-                isCaptureMood: true,
+                isCaptureMood: false,
                 maxNumberFiles: 10
             }
         };
