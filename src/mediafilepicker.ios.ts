@@ -396,8 +396,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         reject(output);
                         break;
                 }
-            })
-        })
+            });
+        });
 
     }
 

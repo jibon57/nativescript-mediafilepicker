@@ -198,18 +198,19 @@ export class HelloWorldModel extends Observable {
                         // We can copy the image to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
 
                         let fileName = "tmpFile.m4a"; // use .m4a
+
                         // copying file will require some time
-                        
+
                         mediafilepicker.copyMPMediaFileToAPPDirectory(result.rawData, fileName).then((res) => {
                             console.dir(res);
                         }).catch((err) => {
                             console.dir(err);
-                        })
+                        });
 
                     } else if (result.file && app.ios && options.ios.isCaptureMood) {
                         // So we have recorded file in APP directory
 
-                        console.log(result.file)
+                        console.log(result.file);
                     }
 
                 }
