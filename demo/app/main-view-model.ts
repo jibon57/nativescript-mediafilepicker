@@ -195,7 +195,7 @@ export class HelloWorldModel extends Observable {
                     console.log(result);
 
                     if (result.file && app.ios && !options.ios.isCaptureMood) {
-                        // We can copy the image to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
+                        // We can copy the audio to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
 
                         let fileName = "tmpFile.m4a"; // use .m4a
 
