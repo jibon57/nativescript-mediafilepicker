@@ -16,6 +16,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     copyPHVideoToAppDirectory(urlAsset: AVURLAsset, fileName: any): Promise<{}>;
     convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
     copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
+    copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}>;
     private presentViewController(controller);
     greet(): string;
 }

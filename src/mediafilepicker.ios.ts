@@ -337,6 +337,70 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         });
     }
 
+    /**
+     * copyMPMediaFileToAPPDirectory
+     * This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
+     * This require some extra time to copy file. So, you will need to wait until you will get any output.
+     */
+    public copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any) {
+
+        return new Promise(function (resolve, reject) {
+
+            let docuPath = fs.knownFolders.documents();
+            let targetImgeURL = docuPath.path + "/filepicker/" + filename;
+
+            let output = {
+                status: false,
+                msg: 'error',
+                file: ''
+            };
+
+            if (fs.File.exists(docuPath.path + "/filepicker/" + filename)) {
+                docuPath.getFile("filepicker/" + filename).remove();
+            }
+
+            let assetURL: NSURL = mediaItem.valueForProperty(MPMediaItemPropertyAssetURL);
+
+            let songAsset: AVURLAsset = AVURLAsset.URLAssetWithURLOptions(assetURL, null);
+
+            let exporter: AVAssetExportSession = AVAssetExportSession.alloc().initWithAssetPresetName(songAsset, AVAssetExportPresetAppleM4A);
+            exporter.outputFileType = "com.apple.m4a-audio";
+
+            let exportURL = NSURL.fileURLWithPath(targetImgeURL);
+
+            exporter.outputURL = exportURL;
+
+            exporter.exportAsynchronouslyWithCompletionHandler(function () {
+                let exportStatus = exporter.status, exportError;
+
+                switch (exportStatus) {
+
+                    case AVAssetExportSessionStatus.Failed:
+                        exportError = exporter.error;
+                        output.msg = exportError;
+                        reject(output);
+                        break;
+
+                    case AVAssetExportSessionStatus.Completed:
+                        output = {
+                            status: true,
+                            msg: 'success',
+                            file: targetImgeURL.toString()
+                        };
+                        resolve(output);
+                        break;
+
+                    default:
+                        exportError = exporter.error;
+                        output.msg = exportError;
+                        reject(output);
+                        break;
+                }
+            })
+        })
+
+    }
+
     private presentViewController(controller) {
 
         let app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);

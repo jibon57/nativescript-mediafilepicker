@@ -208,7 +208,8 @@ openFilePicker(params: FilePickerOptions): void;
 copyPHImageToAppDirectory(rawData: PHAsset, fileName: any): Promise<{}>;
 copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
 convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
-copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;    
+copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
+copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}>;    
 ```
 
 ## All options
