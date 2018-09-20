@@ -479,7 +479,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                         }
 
                         let file = {
-                            type: 'image',
+                            type: 'video',
                             file: url.absoluteString,
                             rawData: result,
                             urlAsset: urlAsset

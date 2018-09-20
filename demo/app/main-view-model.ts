@@ -30,6 +30,7 @@ export class HelloWorldModel extends Observable {
 
         mediafilepicker.on("getFiles", function (res) {
             let results = res.object.get('results');
+            console.dir(results);
 
             if (results) {
 
@@ -103,7 +104,7 @@ export class HelloWorldModel extends Observable {
 
             },
             ios: {
-                isCaptureMood: true,
+                isCaptureMood: false,
                 videoMaximumDuration: 10,
                 allowedVideoQualities: allowedVideoQualities
             }
@@ -115,6 +116,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
 
             let results = res.object.get('results');
+            console.dir(results);
 
             if (results) {
 
@@ -186,6 +188,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
 
             let results = res.object.get('results');
+            console.dir(results);
 
             if (results) {
 
@@ -258,6 +261,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
 
             let results = res.object.get('results');
+            console.dir(results);
 
             if (results) {
 

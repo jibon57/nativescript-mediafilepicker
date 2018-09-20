@@ -1,13 +1,13 @@
 {
     "name": "nativescript-mediafilepicker",
-    "version": "2.0.10",
+    "version": "2.0.11",
     "description": "NativeScript mediafilepicker plugin.",
     "main": "mediafilepicker",
     "typings": "index.d.ts",
     "nativescript": {
         "platforms": {
-            "android": "4.0.0",
-            "ios": "4.0.0"
+            "android": "4.2.0",
+            "ios": "4.2.0"
         }
     },
     "scripts": {
