@@ -1,10 +1,8 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
-import * as utils from "tns-core-modules/utils/utils";
 export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
     private _mediaPickerIQDeligate;
     private _mediaPickerDocumentDeligate;
-    collections: typeof utils.ios.collections;
     results: any;
     msg: any;
     constructor();

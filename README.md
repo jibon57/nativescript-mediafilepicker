@@ -21,7 +21,7 @@ Old version (v1.X) can be found from [this branch](https://github.com/jibon57/na
 
 **Limitations**
 * Anything those exists in Native Library. You can check the native libaries.
-* In iOS after selecting file you may not be able to use it directly. In this case you will need to copy that file in your app directory. After using it you may want to delete it. Please check the demo for more details.
+* In iOS after selecting file you may not be able to use it directly. In this case you will need to copy that file in your app directory. After using it you can delete it for reducing storage memory usage. Please check the demo for more details.
 * At present selecting iCloud file isn't supported for iOS because of Native Library limitation.
 
 **Note:** I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
@@ -84,7 +84,7 @@ mediafilepicker.on("cancel", function (res) {
 let allowedVideoQualities = [];
 
 if (app.ios) {
-    allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  //get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+    allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  // get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
 }
 
 let options: VideoPickerOptions = {
@@ -128,7 +128,7 @@ let options: AudioPickerOptions = {
         isNeedRecorder: true,
         maxNumberFiles: 2,
         isNeedFolderList: true,
-        maxSize: 102400 //Maximum size of recorded file in bytes. 5900 = ~ 1 second
+        maxSize: 102400 // Maximum size of recorded file in bytes. 5900 = ~ 1 second
     },
     ios: {
         isCaptureMood: false,
@@ -161,7 +161,7 @@ mediafilepicker.on("cancel", function (res) {
 let extensions = [];
 
 if (app.ios) {
-    extensions = [kUTTypePDF, kUTTypeText]; //you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
+    extensions = [kUTTypePDF, kUTTypeText]; // you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
 } else {
     extensions = ['txt', 'pdf'];
 }
@@ -204,7 +204,7 @@ openVideoPicker(params: VideoPickerOptions): void;
 openAudioPicker(params: AudioPickerOptions): void;
 openFilePicker(params: FilePickerOptions): void;
 
-//iOS only
+// iOS only
 copyPHImageToAppDirectory(rawData: PHAsset, fileName: any): Promise<{}>;
 copyPHVideoToAppDirectory(asset: AVURLAsset, fileName: any): Promise<{}>;
 convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
@@ -238,7 +238,7 @@ export interface VideoPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
-        allowedVideoQualities?: Array<string>; //https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
     };
 }
 export interface AudioPickerOptions {
@@ -260,7 +260,7 @@ export interface FilePickerOptions {
         maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; //  https://developer.apple.com/documentation/mobilecoreservices/uttype
         multipleSelection?: boolean;
     };
 }

@@ -9,7 +9,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
     private _mediaPickerIQDeligate: MediafilepickerIQMediaPickerControllerDelegate;
     private _mediaPickerDocumentDeligate: MediafilepickerDocumentPickerDelegate;
-    public collections = utils.ios.collections;
 
     public results;
     public msg;
@@ -36,7 +35,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         controller.delegate = this._mediaPickerIQDeligate;
 
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
-        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
+        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
 
         if (options.isCaptureMood) {
             controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
@@ -75,7 +74,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
-        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
+        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
         if (options.isCaptureMood) {
@@ -94,7 +93,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         if (options.allowedVideoQualities) {
 
             if (options.allowedVideoQualities.length > 0) {
-                controller.allowedVideoQualities = this.collections.jsArrayToNSArray(options.allowedVideoQualities);
+                controller.allowedVideoQualities = utils.ios.collections.jsArrayToNSArray(options.allowedVideoQualities);
             }
 
         }
@@ -126,7 +125,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         let options = params.ios, t = this;
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
-        controller.mediaTypes = this.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
+        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
         if (options.isCaptureMood) {
@@ -170,7 +169,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         if (options.extensions) {
             if (options.extensions.length > 0) {
-                documentTypes = this.collections.jsArrayToNSArray(options.extensions);
+                documentTypes = utils.ios.collections.jsArrayToNSArray(options.extensions);
             }
         }
 
