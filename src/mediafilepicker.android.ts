@@ -190,7 +190,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
                 if (Util.detectIntent(context, intent)) {
-                    this.callIntent(intent, Constant.REQUEST_CODE_TAKE_IMAGE)
+                    this.callIntent(intent, Constant.REQUEST_CODE_TAKE_IMAGE);
                 } else {
                     this.msg = "No photo capture app installed!";
                     this.notify({
