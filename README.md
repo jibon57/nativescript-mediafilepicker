@@ -51,11 +51,12 @@ import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOpt
 ```javascript
 let options: ImagePickerOptions = {
     android: {
+        isCaptureMood: false, // if true then camera will open directly.
         isNeedCamera: true,
         maxNumberFiles: 10,
         isNeedFolderList: true
     }, ios: {
-        isCaptureMood: false,
+        isCaptureMood: false, // if true then camera will open directly.
         maxNumberFiles: 10
     }
 };
@@ -66,7 +67,7 @@ mediafilepicker.openImagePicker(options);
 mediafilepicker.on("getFiles", function (res) {
     let results = res.object.get('results');
     console.dir(results);
-})
+});
 
 mediafilepicker.on("error", function (res) {
     let msg = res.object.get('msg');
@@ -89,6 +90,7 @@ if (app.ios) {
 
 let options: VideoPickerOptions = {
     android: {
+        isCaptureMood: false, // if true then camera will open directly.
         isNeedCamera: true,
         maxNumberFiles: 2,
         isNeedFolderList: true,
@@ -96,7 +98,7 @@ let options: VideoPickerOptions = {
 
     },
     ios: {
-        isCaptureMood: false,
+        isCaptureMood: false, // if true then camera will open directly.
         videoMaximumDuration: 10,
         allowedVideoQualities: allowedVideoQualities
     }
@@ -108,7 +110,7 @@ mediafilepicker.openVideoPicker(options);
 mediafilepicker.on("getFiles", function (res) {
     let results = res.object.get('results');
     console.dir(results);
-})
+});
 
 mediafilepicker.on("error", function (res) {
     let msg = res.object.get('msg');
@@ -125,13 +127,14 @@ mediafilepicker.on("cancel", function (res) {
 ```javascript
 let options: AudioPickerOptions = {
     android: {
+        isCaptureMood: false, // if true then voice recorder will open directly.
         isNeedRecorder: true,
         maxNumberFiles: 2,
         isNeedFolderList: true,
         maxSize: 102400 // Maximum size of recorded file in bytes. 5900 = ~ 1 second
     },
     ios: {
-        isCaptureMood: false,
+        isCaptureMood: false, // if true then voice recorder will open directly.
         maxNumberFiles: 5,
         audioMaximumDuration: 10,
     }
@@ -143,7 +146,7 @@ mediafilepicker.openAudioPicker(options);
 mediafilepicker.on("getFiles", function (res) {
     let results = res.object.get('results');
     console.dir(results);
-})
+});
 
 mediafilepicker.on("error", function (res) {
     let msg = res.object.get('msg');
@@ -183,7 +186,7 @@ mediafilepicker.openFilePicker(options);
 mediafilepicker.on("getFiles", function (res) {
     let results = res.object.get('results');
     console.dir(results);
-})
+});
 
 mediafilepicker.on("error", function (res) {
     let msg = res.object.get('msg');
@@ -217,6 +220,7 @@ copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}
 
 export interface ImagePickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
@@ -228,6 +232,7 @@ export interface ImagePickerOptions {
 }
 export interface VideoPickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
@@ -243,6 +248,7 @@ export interface VideoPickerOptions {
 }
 export interface AudioPickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedRecorder?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;

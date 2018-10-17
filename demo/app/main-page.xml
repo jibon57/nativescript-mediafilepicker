@@ -1,9 +1,16 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:ui="nativescript-mediafilepicker">
   <StackLayout class="p-20">
+
+   <Label style="text-align:center; margin-bottom: 10; font-size: 24;" text="Picker"></Label>
    <Button height="44" tap="{{openImagePicker}}" text="Open ImagePicker"></Button>
    <Button height="44" tap="{{openVideoPicker}}" text="Open VideoPicker"></Button>
    <Button height="44" tap="{{openAudioPicker}}" text="Open AudioPicker"></Button>
    <Button height="44" tap="{{openCustomFilesPicker}}" text="Open CustomFilePicker"></Button>
+
+   <Label style="text-align:center; margin-top: 10; font-size: 24;" text="Capture"></Label>
+   <Button height="44" tap="{{imageCapture}}" text="Take Picture"></Button>
+   <Button height="44" tap="{{videoCapture}}" text="Record Video"></Button>
+   <Button height="44" tap="{{audioCapture}}" text="Record Audio"></Button>
   </StackLayout>
 </Page>

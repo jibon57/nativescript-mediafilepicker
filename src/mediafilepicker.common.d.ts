@@ -7,6 +7,7 @@ export declare class MediaPickerInterface {
 }
 export interface ImagePickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: Number;
         isNeedFolderList?: boolean;
@@ -18,6 +19,7 @@ export interface ImagePickerOptions {
 }
 export interface VideoPickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
@@ -33,6 +35,7 @@ export interface VideoPickerOptions {
 }
 export interface AudioPickerOptions {
     android?: {
+        isCaptureMood?: boolean;
         isNeedRecorder?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;

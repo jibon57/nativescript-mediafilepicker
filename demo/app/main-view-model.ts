@@ -16,6 +16,7 @@ export class HelloWorldModel extends Observable {
         let t = this;
         let options: ImagePickerOptions = {
             android: {
+                isCaptureMood: false,
                 isNeedCamera: true,
                 maxNumberFiles: 10,
                 isNeedFolderList: true
@@ -97,6 +98,7 @@ export class HelloWorldModel extends Observable {
 
         let options: VideoPickerOptions = {
             android: {
+                isCaptureMood: false,
                 isNeedCamera: true,
                 maxNumberFiles: 2,
                 isNeedFolderList: true,
@@ -170,6 +172,7 @@ export class HelloWorldModel extends Observable {
 
         let options: AudioPickerOptions = {
             android: {
+                isCaptureMood: false,
                 isNeedRecorder: true,
                 maxNumberFiles: 2,
                 isNeedFolderList: true,
@@ -273,6 +276,114 @@ export class HelloWorldModel extends Observable {
                 }
             }
 
+        });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+    }
+
+    /**
+     * imageCapture
+     */
+    public imageCapture() {
+        let options: ImagePickerOptions = {
+            android: {
+                isCaptureMood: true,
+            }, ios: {
+                isCaptureMood: true,
+            }
+        };
+
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openImagePicker(options);
+
+        mediafilepicker.on("getFiles", function (res) {
+            let results = res.object.get('results');
+            console.dir(results);
+        });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+    }
+
+    /**
+     * videoCapture
+     */
+    public videoCapture() {
+        let allowedVideoQualities = [];
+
+        if (app.ios) {
+            allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  // get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        }
+
+        let options: VideoPickerOptions = {
+            android: {
+                isCaptureMood: true,
+                maxDuration: 20,
+                videoQuality: 1,
+            },
+            ios: {
+                isCaptureMood: true,
+                videoMaximumDuration: 10,
+                allowedVideoQualities: allowedVideoQualities
+            }
+        };
+
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openVideoPicker(options);
+
+        mediafilepicker.on("getFiles", function (res) {
+            let results = res.object.get('results');
+            console.dir(results);
+        });
+
+        mediafilepicker.on("error", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+
+        mediafilepicker.on("cancel", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
+        });
+    }
+
+    /**
+     * audioCapture
+     */
+    public audioCapture() {
+        let options: AudioPickerOptions = {
+            android: {
+                isCaptureMood: true,
+                maxSize: 102400 // Maximum size of recorded file in bytes. 5900 = ~ 1 second
+            },
+            ios: {
+                isCaptureMood: true,
+                maxNumberFiles: 5,
+                audioMaximumDuration: 10,
+            }
+        };
+
+        let mediafilepicker = new Mediafilepicker();
+        mediafilepicker.openAudioPicker(options);
+
+        mediafilepicker.on("getFiles", function (res) {
+            let results = res.object.get('results');
+            console.dir(results);
         });
 
         mediafilepicker.on("error", function (res) {
