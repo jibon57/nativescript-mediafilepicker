@@ -307,7 +307,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
             let results = res.object.get('results');
             console.dir(results);
-        })
+        });
 
         mediafilepicker.on("error", function (res) {
             let msg = res.object.get('msg');
@@ -349,7 +349,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
             let results = res.object.get('results');
             console.dir(results);
-        })
+        });
 
         mediafilepicker.on("error", function (res) {
             let msg = res.object.get('msg');
@@ -384,7 +384,7 @@ export class HelloWorldModel extends Observable {
         mediafilepicker.on("getFiles", function (res) {
             let results = res.object.get('results');
             console.dir(results);
-        })
+        });
 
         mediafilepicker.on("error", function (res) {
             let msg = res.object.get('msg');
