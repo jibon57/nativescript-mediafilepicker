@@ -18,7 +18,7 @@ const File = java.io.File;
 const ContentValues = android.content.ContentValues;
 const Uri = android.net.Uri;
 
-declare const java;
+declare const java, android;
 
 export class Mediafilepicker extends Observable implements MediaPickerInterface {
 
