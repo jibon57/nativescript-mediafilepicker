@@ -8,8 +8,9 @@ matrix:
     - stage: "WebPack, Build and Test"
       os: osx
       env:
-        - WebPack="iOS"
-      osx_image: xcode9.3
+        - BuildiOS="12.0"
+        - Xcode="10.0"
+      osx_image: xcode10.0
       language: node_js 
       node_js: "8"
       jdk: oraclejdk8
@@ -19,21 +20,21 @@ matrix:
       env:
         - WebPack="Android"
       jdk: oraclejdk8
-      before_install: nvm install stable
+      before_install: nvm install 8
       script: cd demo && npm run build.plugin && npm i && tns build android --bundle --env.uglify --env.snapshot
     - language: android
       env: 
-        - BuildAndroid="26"
+        - BuildAndroid="28"
       os: linux
       jdk: oraclejdk8
-      before_install: nvm install stable
+      before_install: nvm install 8
       script:
         - cd src && npm i && npm run tsc && cd ../demo && tns build android
     - os: osx
       env: 
-        - BuildiOS="11"
-        - Xcode="9.2"
-      osx_image: xcode9.2
+        - BuildiOS="12.0"
+        - Xcode="10.0"
+      osx_image: xcode10.0
       language: node_js 
       node_js: "8"
       jdk: oraclejdk8
@@ -55,16 +56,15 @@ matrix:
       language: node_js
       node_js: "8"
       jdk: oraclejdk8
-      osx_image: xcode9.2
+      osx_image: xcode10.0
       script: cd src && npm run test.ios
 
 android:
   components:
     - tools
     - platform-tools
-    - build-tools-27.0.3
-    - android-27
-    - android-23
+    - build-tools-28.0.2
+    - android-28
     - extra-android-m2repository
     - sys-img-armeabi-v7a-android-21
   licenses:
