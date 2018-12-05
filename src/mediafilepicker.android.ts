@@ -272,9 +272,9 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         let t = this;
 
         const requestPermissions = [android.Manifest.permission.WRITE_EXTERNAL_STORAGE];
-        if (pickerType === Constant.REQUEST_CODE_TAKE_IMAGE || pickerType === Constant.REQUEST_CODE_TAKE_VIDEO) {
+        if (pickerType === Constant.REQUEST_CODE_TAKE_IMAGE || pickerType === Constant.REQUEST_CODE_PICK_IMAGE || pickerType === Constant.REQUEST_CODE_TAKE_VIDEO || pickerType === Constant.REQUEST_CODE_PICK_VIDEO) {
             requestPermissions.push(android.Manifest.permission.CAMERA);
-        } else if (pickerType === Constant.REQUEST_CODE_TAKE_AUDIO) {
+        } else if (pickerType === Constant.REQUEST_CODE_TAKE_AUDIO || pickerType === Constant.REQUEST_CODE_PICK_AUDIO) {
             requestPermissions.push(android.Manifest.permission.RECORD_AUDIO);
         }
 
