@@ -153,7 +153,14 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let t = this;
 
-        permissions.requestPermission([android.Manifest.permission.CAMERA, android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE], "Need these permissions to access files")
+        const requestPermissions = [android.Manifest.permission.WRITE_EXTERNAL_STORAGE];
+        if (type === "image" || type === "video") {
+            requestPermissions.push(android.Manifest.permission.CAMERA);
+        } else if (type === "audio") {
+            requestPermissions.push(android.Manifest.permission.RECORD_AUDIO);
+        }
+
+        permissions.requestPermission(requestPermissions, "Need these permissions to access files")
             .then(function () {
                 t.handleOnlyCaptureMode(type, options);
             })
@@ -264,7 +271,14 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let t = this;
 
-        permissions.requestPermission([android.Manifest.permission.CAMERA, android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE], "Need these permissions to access files")
+        const requestPermissions = [android.Manifest.permission.WRITE_EXTERNAL_STORAGE];
+        if (pickerType === Constant.REQUEST_CODE_TAKE_IMAGE || pickerType === Constant.REQUEST_CODE_TAKE_VIDEO) {
+            requestPermissions.push(android.Manifest.permission.CAMERA);
+        } else if (pickerType === Constant.REQUEST_CODE_TAKE_AUDIO) {
+            requestPermissions.push(android.Manifest.permission.RECORD_AUDIO);
+        }
+
+        permissions.requestPermission(requestPermissions, "Need these permissions to access files")
             .then(function () {
                 app.android.foregroundActivity.startActivityForResult(intent, pickerType);
             })
