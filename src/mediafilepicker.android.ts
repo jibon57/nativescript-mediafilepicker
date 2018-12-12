@@ -473,7 +473,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 });
             }
 
-        }, 1000);
+        }, 300);
     }
 
     public greet() {

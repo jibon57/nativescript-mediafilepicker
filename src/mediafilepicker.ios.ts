@@ -545,7 +545,6 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                 };
 
                 output.push(file);
-
             }
         }
 
@@ -568,7 +567,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
                 });
             }
 
-        }, 1000);
+        }, 300);
 
     }
 
@@ -596,7 +595,7 @@ class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocume
         return delegate;
     }
 
-    documentPickerDidPickDocumentAtURL(controller: UIDocumentPickerViewController, url: NSURL) {
+    public documentPickerDidPickDocumentAtURL(controller: UIDocumentPickerViewController, url: NSURL) {
 
         let t = this._owner.get();
 
@@ -625,10 +624,11 @@ class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocume
                 });
             }
 
-        }, 1000);
+        }, 300);
 
     }
-    documentPickerDidPickDocumentsAtURLs(controller: UIDocumentPickerViewController, urls: NSArray<NSURL>) {
+
+    public documentPickerDidPickDocumentsAtURLs(controller: UIDocumentPickerViewController, urls: NSArray<NSURL>) {
 
         let output = [];
         let t = this._owner.get();
@@ -669,10 +669,11 @@ class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocume
                 });
             }
 
-        }, 1000);
+        }, 300);
 
     }
-    documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
+
+    public documentPickerWasCancelled(controller: UIDocumentPickerViewController) {
 
         this._owner.get().msg = 'Picker cancel';
 

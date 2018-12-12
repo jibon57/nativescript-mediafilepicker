@@ -106,9 +106,7 @@ export class HelloWorldModel extends Observable {
 
             },
             ios: {
-                isCaptureMood: false,
-                videoMaximumDuration: 10,
-                allowedVideoQualities: allowedVideoQualities
+                isCaptureMood: false
             }
         };
 
