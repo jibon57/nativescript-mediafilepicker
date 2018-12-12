@@ -24,3 +24,5 @@ publish/src
 publish/package
 demo/report/report.html
 demo/report/stats.json
+demo/tsconfig.tns.json
+demo/webpack.config.js
