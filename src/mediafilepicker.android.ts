@@ -38,7 +38,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let intent, pickerType, options = params.android;
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             this.performCapturing("image", options);
             return;
         }
@@ -63,7 +63,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let intent, pickerType, options = params.android;
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             this.performCapturing("video", options);
             return;
         }
@@ -98,7 +98,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let intent, pickerType, options = params.android;
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             this.performCapturing("audio", options);
             return;
         }

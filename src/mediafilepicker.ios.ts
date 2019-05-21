@@ -37,7 +37,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
         controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
         }
 
@@ -46,7 +46,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             controller.maximumItemCount = options.maxNumberFiles;
         }
 
-        if (!options.isCaptureMood) {
+        if (!options.isCaptureMode) {
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
@@ -77,7 +77,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
         }
 
@@ -98,7 +98,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         }
 
-        if (!options.isCaptureMood) {
+        if (!options.isCaptureMode) {
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
@@ -128,7 +128,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
-        if (options.isCaptureMood) {
+        if (options.isCaptureMode) {
             controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
         }
 
@@ -141,7 +141,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             controller.audioMaximumDuration = options.audioMaximumDuration;
         }
 
-        if (!options.isCaptureMood) {
+        if (!options.isCaptureMode) {
             MPMediaLibrary.requestAuthorization(function (status) {
 
                 if (status === MPMediaLibraryAuthorizationStatus.Authorized) {

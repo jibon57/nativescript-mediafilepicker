@@ -7,19 +7,19 @@ export declare class MediaPickerInterface {
 }
 export interface ImagePickerOptions {
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
     };
 }
 export interface VideoPickerOptions {
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
@@ -27,7 +27,7 @@ export interface VideoPickerOptions {
         videoQuality?: number;
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>;
@@ -35,14 +35,14 @@ export interface VideoPickerOptions {
 }
 export interface AudioPickerOptions {
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedRecorder?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
         maxSize?: number;
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
     };

@@ -6,23 +6,21 @@ export class MediaPickerInterface {
     greet() { }
 }
 export interface ImagePickerOptions {
-
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
     };
 }
 
 export interface VideoPickerOptions {
-
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedCamera?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
@@ -31,7 +29,7 @@ export interface VideoPickerOptions {
 
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
@@ -40,14 +38,14 @@ export interface VideoPickerOptions {
 
 export interface AudioPickerOptions {
     android?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         isNeedRecorder?: boolean;
         maxNumberFiles?: number;
         isNeedFolderList?: boolean;
         maxSize?: number;
     };
     ios?: {
-        isCaptureMood?: boolean;
+        isCaptureMode?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
     };
