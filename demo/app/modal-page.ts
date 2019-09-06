@@ -1,12 +1,11 @@
-import { fromObject } from "tns-core-modules/data/observable";
-import { Page } from "tns-core-modules/ui/page";
+import { Page, View } from 'tns-core-modules/ui/page';
 import { HelloWorldModel } from "./main-view-model";
 let closeCallback;
 
 export function onShownModally(args) {
     const context = args.context;
     closeCallback = args.closeCallback;
-    args.object.bindingContext = new HelloWorldModel();
+    args.object.bindingContext = new HelloWorldModel(args.object as View);
 }
 
 export function onCloseButtonTap(args) {

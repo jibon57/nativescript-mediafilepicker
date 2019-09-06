@@ -7,5 +7,5 @@ import { View } from 'tns-core-modules/ui/page';
 export function pageLoaded(args: observable.EventData) {
     // Get the event sender
     let page = <pages.Page>args.object;
-    page.bindingContext = new HelloWorldModel(args.object as View);
+    page.bindingContext = new HelloWorldModel();
 }
