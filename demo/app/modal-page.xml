@@ -1,0 +1,11 @@
+<Page xmlns="http://www.nativescript.org/tns.xsd" shownModally="onShownModally">
+    <StackLayout class="p-20">
+        <Label style="text-align:center; margin-bottom: 10; font-size: 24;" text="Picker"></Label>
+        <Button height="44" tap="{{openImagePicker}}" text="Open ImagePicker"></Button>
+        <Button height="44" tap="{{openVideoPicker}}" text="Open VideoPicker"></Button>
+        <Button height="44" tap="{{openAudioPicker}}" text="Open AudioPicker"></Button>
+        <Button height="44" tap="{{openCustomFilesPicker}}" text="Open CustomFilePicker"></Button>
+        
+        <Button class="m-t-20 btn btn-primary" text="Close" tap="onCloseButtonTap" />
+    </StackLayout>
+</Page>

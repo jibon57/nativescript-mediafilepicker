@@ -1,5 +1,6 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface } from "./mediafilepicker.common";
+import { View } from 'tns-core-modules/ui/core/view';
 export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
     constructor();
     openImagePicker(params: ImagePickerOptions): void;
@@ -24,6 +25,7 @@ export interface ImagePickerOptions {
     ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
+        hostView?: View;
     };
 }
 export interface VideoPickerOptions {
@@ -40,6 +42,7 @@ export interface VideoPickerOptions {
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        hostView?: View;
     };
 }
 export interface AudioPickerOptions {
@@ -54,6 +57,7 @@ export interface AudioPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
+        hostView?: View;
     };
 }
 export interface FilePickerOptions {
@@ -64,5 +68,6 @@ export interface FilePickerOptions {
     ios?: {
         extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
         multipleSelection?: boolean;
+        hostView?: View;
     };
 }

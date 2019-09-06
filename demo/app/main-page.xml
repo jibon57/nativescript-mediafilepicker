@@ -12,5 +12,7 @@
    <Button height="44" tap="{{imageCapture}}" text="Take Picture"></Button>
    <Button height="44" tap="{{videoCapture}}" text="Record Video"></Button>
    <Button height="44" tap="{{audioCapture}}" text="Record Audio"></Button>
+
+   <Button class="m-t-20 btn btn-primary" text="Open modal" tap="{{openModal}}" textWrap="true" />
   </StackLayout>
 </Page>

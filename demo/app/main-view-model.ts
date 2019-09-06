@@ -1,12 +1,27 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
 import * as app from 'tns-core-modules/application';
+import { Button } from 'tns-core-modules/ui/button/button';
+import { ShowModalOptions, View } from 'tns-core-modules/ui/core/view';
 declare const AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh, AVCaptureSessionPresetLow, kUTTypePDF, kUTTypeText;
 
 export class HelloWorldModel extends Observable {
 
-    constructor() {
+    private _hostView: View;
+
+    constructor(hostView?: View) {
         super();
+        this._hostView = hostView;
+    }
+
+    public openModal(args) {
+        const mainView: Button = <Button>args.object;
+        const option: ShowModalOptions = {
+            context: {},
+            closeCallback: () => { },
+            fullscreen: true
+        };
+        mainView.showModal("modal-page", option);
     }
 
     /**
@@ -22,7 +37,8 @@ export class HelloWorldModel extends Observable {
                 isNeedFolderList: true
             }, ios: {
                 isCaptureMood: false,
-                maxNumberFiles: 10
+                maxNumberFiles: 10,
+                hostView: this._hostView
             }
         };
 
@@ -106,7 +122,8 @@ export class HelloWorldModel extends Observable {
 
             },
             ios: {
-                isCaptureMood: false
+                isCaptureMood: false,
+                hostView: this._hostView
             }
         };
 
@@ -180,6 +197,7 @@ export class HelloWorldModel extends Observable {
                 isCaptureMood: false,
                 maxNumberFiles: 5,
                 audioMaximumDuration: 10,
+                hostView: this._hostView
             }
         };
 
@@ -252,7 +270,8 @@ export class HelloWorldModel extends Observable {
             },
             ios: {
                 extensions: extensions,
-                multipleSelection: true
+                multipleSelection: true,
+                hostView: this._hostView
             }
         };
 
@@ -296,6 +315,7 @@ export class HelloWorldModel extends Observable {
                 isCaptureMood: true,
             }, ios: {
                 isCaptureMood: true,
+                hostView: this._hostView
             }
         };
 
@@ -337,7 +357,8 @@ export class HelloWorldModel extends Observable {
             ios: {
                 isCaptureMood: true,
                 videoMaximumDuration: 10,
-                allowedVideoQualities: allowedVideoQualities
+                allowedVideoQualities: allowedVideoQualities,
+                hostView: this._hostView
             }
         };
 
@@ -373,6 +394,7 @@ export class HelloWorldModel extends Observable {
                 isCaptureMood: true,
                 maxNumberFiles: 5,
                 audioMaximumDuration: 10,
+                hostView: this._hostView
             }
         };
 
