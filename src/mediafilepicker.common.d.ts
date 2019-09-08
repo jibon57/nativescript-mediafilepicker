@@ -1,3 +1,4 @@
+import { View } from 'tns-core-modules/ui/core/view';
 export declare class MediaPickerInterface {
     openImagePicker(params: ImagePickerOptions): void;
     openVideoPicker(params: VideoPickerOptions): void;
@@ -15,6 +16,7 @@ export interface ImagePickerOptions {
     ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
+        hostView?: View;
     };
 }
 export interface VideoPickerOptions {
@@ -31,6 +33,7 @@ export interface VideoPickerOptions {
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>;
+        hostView?: View;
     };
 }
 export interface AudioPickerOptions {
@@ -45,6 +48,7 @@ export interface AudioPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
+        hostView?: View;
     };
 }
 export interface FilePickerOptions {
@@ -55,5 +59,6 @@ export interface FilePickerOptions {
     ios?: {
         extensions: Array<string>;
         multipleSelection?: boolean;
+        hostView?: View;
     };
 }

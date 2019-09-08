@@ -2,6 +2,7 @@ import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
 import * as utils from "tns-core-modules/utils/utils";
 import * as fs from "tns-core-modules/file-system/file-system";
+import { View } from 'tns-core-modules/ui/core/view';
 
 declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio;
 
@@ -50,7 +51,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller);
+                    t.presentViewController(controller, options.hostView);
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
@@ -61,7 +62,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             });
 
         } else {
-            this.presentViewController(controller);
+            this.presentViewController(controller, options.hostView);
         }
     }
 
@@ -102,7 +103,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller);
+                    t.presentViewController(controller, options.hostView);
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
@@ -113,7 +114,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             });
 
         } else {
-            this.presentViewController(controller);
+            this.presentViewController(controller, options.hostView);
         }
     }
 
@@ -145,7 +146,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             MPMediaLibrary.requestAuthorization(function (status) {
 
                 if (status === MPMediaLibraryAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller);
+                    t.presentViewController(controller, options.hostView);
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
@@ -155,7 +156,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 }
             });
         } else {
-            this.presentViewController(controller);
+            this.presentViewController(controller, options.hostView);
         }
     }
 
@@ -180,7 +181,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             controller.allowsMultipleSelection = true;
         }
 
-        this.presentViewController(controller);
+        this.presentViewController(controller, options.hostView);
     }
 
     /**
@@ -400,11 +401,19 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
     }
 
-    private presentViewController(controller) {
+    private presentViewController(controller, hostView?: View) {
 
-        let app = utils.ios.getter(UIApplication, UIApplication.sharedApplication);
+        let viewController = hostView ? hostView.viewController : UIApplication.sharedApplication.keyWindow.rootViewController;
 
-        app.keyWindow.rootViewController.presentViewControllerAnimatedCompletion(controller, true, null);
+        while (
+            viewController.presentedViewController
+            && viewController.presentedViewController.viewLoaded
+            && viewController.presentedViewController.view.window
+        ) {
+            viewController = viewController.presentedViewController;
+        }
+
+        viewController.presentViewControllerAnimatedCompletion(controller, true, null);
     }
 
     public greet() {

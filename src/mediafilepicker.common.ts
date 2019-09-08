@@ -1,3 +1,5 @@
+import { View } from 'tns-core-modules/ui/core/view';
+
 export class MediaPickerInterface {
     openImagePicker(params: ImagePickerOptions) { }
     openVideoPicker(params: VideoPickerOptions) { }
@@ -16,6 +18,7 @@ export interface ImagePickerOptions {
     ios?: {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
+        hostView?: View;
     };
 }
 
@@ -35,6 +38,7 @@ export interface VideoPickerOptions {
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        hostView?: View;
     };
 }
 
@@ -50,6 +54,7 @@ export interface AudioPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
+        hostView?: View;
     };
 }
 
@@ -61,5 +66,6 @@ export interface FilePickerOptions {
     ios?: {
         extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
         multipleSelection?: boolean;
+        hostView?: View;
     };
 }
