@@ -4,6 +4,8 @@ import * as app from 'tns-core-modules/application';
 import * as utils from "tns-core-modules/utils/utils";
 const permissions = require('nativescript-permissions');
 
+declare var com;
+
 const AudioPickActivity = com.vincent.filepicker.activity.AudioPickActivity;
 const ImagePickActivity = com.vincent.filepicker.activity.ImagePickActivity;
 const NormalFilePickActivity = com.vincent.filepicker.activity.NormalFilePickActivity;
