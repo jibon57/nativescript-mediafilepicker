@@ -5,6 +5,7 @@ import * as fs from "tns-core-modules/file-system/file-system";
 import { View } from 'tns-core-modules/ui/core/view';
 
 declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio;
+const main_queue = dispatch_get_current_queue();
 
 export class Mediafilepicker extends Observable implements MediaPickerInterface {
 
@@ -51,7 +52,9 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller, options.hostView);
+                    dispatch_async(main_queue, () => {
+                        t.presentViewController(controller, options.hostView);
+                    });
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
@@ -103,7 +106,9 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             PHPhotoLibrary.requestAuthorization(function (status) {
 
                 if (status === PHAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller, options.hostView);
+                    dispatch_async(main_queue, () => {
+                        t.presentViewController(controller, options.hostView);
+                    });
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
@@ -146,7 +151,9 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             MPMediaLibrary.requestAuthorization(function (status) {
 
                 if (status === MPMediaLibraryAuthorizationStatus.Authorized) {
-                    t.presentViewController(controller, options.hostView);
+                    dispatch_async(main_queue, () => {
+                        t.presentViewController(controller, options.hostView);
+                    });
                 } else {
                     t.msg = "Permission Error!";
                     t.notify({
