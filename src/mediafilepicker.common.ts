@@ -12,7 +12,7 @@ export interface ImagePickerOptions {
     android?: {
         isCaptureMood?: boolean;
         isNeedCamera?: boolean;
-        maxNumberFiles?: Number;
+        maxNumberFiles?: number;
         isNeedFolderList?: boolean;
     };
     ios?: {
