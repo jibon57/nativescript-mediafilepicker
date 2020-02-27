@@ -15,6 +15,7 @@ export interface ImagePickerOptions {
     };
     ios?: {
         isCaptureMood?: boolean;
+        isNeedCamera?: boolean;
         maxNumberFiles?: number;
         hostView?: View;
     };

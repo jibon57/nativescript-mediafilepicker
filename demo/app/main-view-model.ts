@@ -37,6 +37,7 @@ export class HelloWorldModel extends Observable {
                 isNeedFolderList: true
             }, ios: {
                 isCaptureMood: false,
+                isNeedCamera: true,
                 maxNumberFiles: 10,
                 hostView: this._hostView
             }

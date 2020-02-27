@@ -1,2 +1,2 @@
 pod 'IQMediaPickerController'
-pod 'DKImagePickerController', :subspecs => ['PhotoGallery']
+pod 'DKImagePickerController', :subspecs => ['PhotoGallery', 'Camera']

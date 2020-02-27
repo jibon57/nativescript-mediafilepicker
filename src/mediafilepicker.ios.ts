@@ -78,6 +78,10 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 picker.maxSelectableCount = options.maxNumberFiles;
             }
 
+            if (options.isNeedCamera) {
+                picker.sourceType = DKImagePickerControllerSourceType.Both;
+            }
+
             picker.didSelectAssets = ((res) => {
 
                 let output = [];

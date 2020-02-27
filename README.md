@@ -56,6 +56,7 @@ let options: ImagePickerOptions = {
         isNeedFolderList: true
     }, ios: {
         isCaptureMood: false, // if true then camera will open directly.
+        isNeedCamera: true,
         maxNumberFiles: 10
     }
 };
@@ -228,7 +229,6 @@ copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}
 
 ## All options
 ```javascript
-
 export interface ImagePickerOptions {
     android?: {
         isCaptureMood?: boolean;
@@ -238,7 +238,9 @@ export interface ImagePickerOptions {
     };
     ios?: {
         isCaptureMood?: boolean;
+        isNeedCamera?: boolean;
         maxNumberFiles?: number;
+        hostView?: View;
     };
 }
 export interface VideoPickerOptions {
@@ -255,6 +257,7 @@ export interface VideoPickerOptions {
         maxNumberFiles?: number;
         videoMaximumDuration?: number;
         allowedVideoQualities?: Array<string>; // https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
+        hostView?: View;
     };
 }
 export interface AudioPickerOptions {
@@ -269,6 +272,7 @@ export interface AudioPickerOptions {
         isCaptureMood?: boolean;
         maxNumberFiles?: number;
         audioMaximumDuration?: number;
+        hostView?: View;
     };
 }
 export interface FilePickerOptions {
@@ -277,8 +281,9 @@ export interface FilePickerOptions {
         maxNumberFiles?: number;
     };
     ios?: {
-        extensions: Array<string>; //  https://developer.apple.com/documentation/mobilecoreservices/uttype
+        extensions: Array<string>; // https://developer.apple.com/documentation/mobilecoreservices/uttype
         multipleSelection?: boolean;
+        hostView?: View;
     };
 }
 ```

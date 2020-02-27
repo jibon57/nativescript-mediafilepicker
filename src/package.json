@@ -1,6 +1,6 @@
 {
     "name": "nativescript-mediafilepicker",
-    "version": "2.0.19",
+    "version": "3.0.0",
     "description": "NativeScript mediafilepicker plugin.",
     "main": "mediafilepicker",
     "typings": "index.d.ts",
