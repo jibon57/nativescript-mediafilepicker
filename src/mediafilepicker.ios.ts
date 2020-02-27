@@ -49,20 +49,70 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
 
         if (!options.isCaptureMood) {
-            PHPhotoLibrary.requestAuthorization(function (status) {
 
-                if (status === PHAuthorizationStatus.Authorized) {
-                    dispatch_async(main_queue, () => {
-                        t.presentViewController(controller, options.hostView);
+            let picker = DKImagePickerController.new();
+            picker.assetType = DKImagePickerControllerAssetType.AllPhotos;
+            picker.singleSelect = true;
+            picker.showsCancelButton = true;
+            picker.sourceType = DKImagePickerControllerSourceType.Photo;
+            picker.exportsWhenCompleted = true;
+            picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
+
+                if (p == DKImagePickerControllerExportStatus.None) {
+                    t.msg = DKImagePickerControllerExportStatus.None;
+                    t.notify({
+                        eventName: 'exportStatus',
+                        object: t
                     });
                 } else {
-                    t.msg = "Permission Error!";
+                    t.msg = DKImagePickerControllerExportStatus.Exporting;
                     t.notify({
-                        eventName: 'error',
+                        eventName: 'exportStatus',
                         object: t
                     });
                 }
+            }
+
+            if (options.maxNumberFiles > 0) {
+                picker.singleSelect = false;
+                picker.maxSelectableCount = options.maxNumberFiles;
+            }
+
+            picker.didSelectAssets = ((res) => {
+
+                let output = [];
+
+                let items: any = utils.ios.collections.nsArrayToJSArray(res);
+
+                for (let i = 0; i < items.length; i++) {
+                    let item: DKAsset = items[i];
+                    let file = {
+                        type: 'image',
+                        file: item.localTemporaryPath.path,
+                        fileName: item.fileName,
+                        rawData: item.originalAsset
+                    };
+                    output.push(file);
+                }
+
+                t.results = output;
+
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
             });
+
+            picker.didCancel = (() => {
+                t.msg = 'Picker cancel';
+                t.notify({
+                    eventName: 'cancel',
+                    object: t
+                });
+            });
+
+            this.presentViewController(picker, options.hostView);
 
         } else {
             this.presentViewController(controller, options.hostView);
@@ -103,20 +153,70 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
 
         if (!options.isCaptureMood) {
-            PHPhotoLibrary.requestAuthorization(function (status) {
 
-                if (status === PHAuthorizationStatus.Authorized) {
-                    dispatch_async(main_queue, () => {
-                        t.presentViewController(controller, options.hostView);
+            let picker = DKImagePickerController.new();
+            picker.assetType = DKImagePickerControllerAssetType.AllVideos;
+            picker.singleSelect = true;
+            picker.showsCancelButton = true;
+            picker.sourceType = DKImagePickerControllerSourceType.Photo;
+            picker.exportsWhenCompleted = true;
+            picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
+
+                if (p == DKImagePickerControllerExportStatus.None) {
+                    t.msg = DKImagePickerControllerExportStatus.None;
+                    t.notify({
+                        eventName: 'exportStatus',
+                        object: t
                     });
                 } else {
-                    t.msg = "Permission Error!";
+                    t.msg = DKImagePickerControllerExportStatus.Exporting;
                     t.notify({
-                        eventName: 'error',
+                        eventName: 'exportStatus',
                         object: t
                     });
                 }
+            }
+
+            if (options.maxNumberFiles > 0) {
+                picker.singleSelect = false;
+                picker.maxSelectableCount = options.maxNumberFiles;
+            }
+
+            picker.didSelectAssets = ((res) => {
+
+                let output = [];
+
+                let items: any = utils.ios.collections.nsArrayToJSArray(res);
+
+                for (let i = 0; i < items.length; i++) {
+                    let item: DKAsset = items[i];
+                    let file = {
+                        type: 'video',
+                        file: item.localTemporaryPath.path,
+                        fileName: item.fileName,
+                        rawData: item.originalAsset
+                    };
+                    output.push(file);
+                }
+
+                t.results = output;
+
+                t.notify({
+                    eventName: 'getFiles',
+                    object: t
+                });
+
             });
+
+            picker.didCancel = (() => {
+                t.msg = 'Picker cancel';
+                t.notify({
+                    eventName: 'cancel',
+                    object: t
+                });
+            });
+
+            this.presentViewController(picker, options.hostView);
 
         } else {
             this.presentViewController(controller, options.hostView);

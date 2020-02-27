@@ -1,6 +1,5 @@
 import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
-import { View } from 'tns-core-modules/ui/core/view';
 export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
     private _mediaPickerIQDeligate;
     private _mediaPickerDocumentDeligate;
@@ -16,7 +15,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
     copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
     copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}>;
-    private presentViewController(controller, hostView?: View);
+    private presentViewController;
     greet(): string;
 }
 export declare class MediafilepickerIQMediaPickerControllerDelegate extends NSObject implements IQMediaPickerControllerDelegate {

@@ -21,8 +21,8 @@ Old version (v1.X) can be found from [this branch](https://github.com/jibon57/na
 
 **Limitations**
 * Anything those exists in Native Library. You can check the native libaries.
-* In iOS after selecting file you may not be able to use it directly. In this case you will need to copy that file in your app directory. After using it you can delete it for reducing storage memory usage. Please check the demo for more details.
-* At present selecting iCloud file isn't supported for iOS because of Native Library limitation.
+* ~~In iOS after selecting file you may not be able to use it directly. In this case you will need to copy that file in your app directory. After using it you can delete it for reducing storage memory usage. Please check the demo for more details.~~ Only for iOS Audio picker.
+* ~~At present selecting iCloud file isn't supported for iOS because of Native Library limitation.~~
 
 **Note:** I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
 
@@ -69,6 +69,12 @@ mediafilepicker.on("getFiles", function (res) {
     console.dir(results);
 });
 
+// for iOS iCloud downloading status
+mediafilepicker.on("exportStatus", function (res) {
+    let msg = res.object.get('msg');
+    console.log(msg);
+});
+
 mediafilepicker.on("error", function (res) {
     let msg = res.object.get('msg');
     console.log(msg);
@@ -110,6 +116,12 @@ mediafilepicker.openVideoPicker(options);
 mediafilepicker.on("getFiles", function (res) {
     let results = res.object.get('results');
     console.dir(results);
+});
+
+// for iOS iCloud downloading status
+mediafilepicker.on("exportStatus", function (res) {
+    let msg = res.object.get('msg');
+    console.log(msg);
 });
 
 mediafilepicker.on("error", function (res) {

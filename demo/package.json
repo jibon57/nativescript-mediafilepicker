@@ -1,20 +1,17 @@
 {
   "nativescript": {
     "id": "org.nativescript.demo",
-    "tns-android": {
-      "version": "6.1.1"
-    },
     "tns-ios": {
-      "version": "6.1.1"
+      "version": "6.4.2"
     }
   },
   "dependencies": {
     "nativescript-mediafilepicker": "file:../src",
     "nativescript-theme-core": "~1.0.6",
-    "tns-core-modules": "~6.1.0"
+    "tns-core-modules": "~6.4.1"
   },
   "devDependencies": {
-    "nativescript-dev-webpack": "~1.2.0",
+    "nativescript-dev-webpack": "~1.5.1",
     "typescript": "~3.5.3"
   },
   "scripts": {

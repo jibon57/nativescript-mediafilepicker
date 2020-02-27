@@ -70,9 +70,9 @@ export class HelloWorldModel extends Observable {
                         })*/
 
                         // or can get UIImage to display
-                        mediafilepicker.convertPHImageToUIImage(result.rawData).then(res => {
+                        /*mediafilepicker.convertPHImageToUIImage(result.rawData).then(res => {
                             console.log(res);
-                        });
+                        });*/
                     } else if (result.file && app.ios) {
                         // So we have taken image & will get UIImage
 
@@ -87,6 +87,12 @@ export class HelloWorldModel extends Observable {
 
                 }
             }
+        });
+
+        // for iOS iCloud downloading status
+        mediafilepicker.on("exportStatus", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
         });
 
         mediafilepicker.on("error", function (res) {
@@ -145,28 +151,15 @@ export class HelloWorldModel extends Observable {
                     let file = result.file;
 
                     console.log(file);
-
-                    if (result.file && app.ios && !options.ios.isCaptureMood) {
-
-                        let fileName = file.replace(/^.*[\/]/, '');
-
-                        setTimeout(() => {
-                            mediafilepicker.copyPHVideoToAppDirectory(result.urlAsset, fileName).then(res => {
-                                console.dir(res);
-                            }).catch(e => {
-                                console.dir(e);
-                            });
-                        }, 1000);
-
-                    } else if (result.file && app.ios) {
-                        // or we will get our own recorded video :)
-
-                        console.log(file);
-                    }
-
                 }
             }
 
+        });
+
+        // for iOS iCloud downloading status
+        mediafilepicker.on("exportStatus", function (res) {
+            let msg = res.object.get('msg');
+            console.log(msg);
         });
 
         mediafilepicker.on("error", function (res) {
