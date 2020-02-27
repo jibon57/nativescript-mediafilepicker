@@ -6,7 +6,7 @@
 A complete file picker solution for NativeScript. You will be able to pickup any types of file. Capturing image, video & audio are supported. It's a combination features of [nativescript-imagepicker](https://github.com/NativeScript/nativescript-imagepicker) and [nativescript-camera](https://github.com/NativeScript/nativescript-camera/) plugin with some extended features using following native libaries:
 
 * Android: [MultiType-FilePicker](https://github.com/fishwjy/MultiType-FilePicker)
-* iOS: [IQMediaPickerController](https://github.com/hackiftekhar/IQMediaPickerController)
+* iOS: [IQMediaPickerController](https://github.com/hackiftekhar/IQMediaPickerController) & [DKImagePickerController](https://github.com/zhangao0086/DKImagePickerController)
 
 Old version (v1.X) can be found from [this branch](https://github.com/jibon57/nativescript-mediafilepicker/tree/v1)
 
