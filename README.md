@@ -210,6 +210,15 @@ mediafilepicker.on("cancel", function (res) {
     console.log(msg);
 });
 ```
+**Usage in Angular**
+```javascript
+mediafilepicker.on("getFiles", event => {
+	this._ngZone.run(() => {
+		// do your stuff here
+		// any UI changes will be reflected
+	});
+});
+```
 
 ## All Methods
 
