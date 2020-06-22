@@ -94,7 +94,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         type: 'image',
                         file: item.localTemporaryPath.path,
                         fileName: item.fileName,
-                        rawData: item.originalAsset
+                        rawData: item.originalAsset.toString()
                     };
                     output.push(file);
                 }
