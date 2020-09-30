@@ -1,5 +1,5 @@
-import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
+import { Observable } from "@nativescript/core";
 export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
     results: any;
     msg: any;

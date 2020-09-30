@@ -28,6 +28,7 @@ pack() {
     # compile package and copy files required by npm
     echo 'Building /src...'
     cd "$TO_SOURCE_DIR"
+    node_modules/.bin/ts-patch install
     node_modules/.bin/tsc
     cd ..
 

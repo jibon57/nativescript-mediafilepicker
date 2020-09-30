@@ -1,4 +1,4 @@
-import { Page, View } from 'tns-core-modules/ui/page';
+import { Page, View } from '@nativescript/core';
 import { HelloWorldModel } from "./main-view-model";
 let closeCallback;
 

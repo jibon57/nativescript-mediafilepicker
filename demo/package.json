@@ -1,24 +1,24 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.demo",
-    "tns-ios": {
-      "version": "6.4.2"
-    },
-    "tns-android": {
-      "version": "6.4.1"
-    }
+  "description": "NativeScript Application",
+  "scripts": {
+    "build.plugin": "cd ../src && npm run build",
+    "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts' --exclude '**/node_modules/**' --exclude '**/platforms/**'"
   },
+  "license": "SEE LICENSE IN <your-license-filename>",
+  "repository": "<fill-your-repository-here>",
   "dependencies": {
     "nativescript-mediafilepicker": "file:../src",
-    "nativescript-theme-core": "~1.0.6",
-    "tns-core-modules": "~6.4.1"
+    "@nativescript/theme": "^2.3.3",
+    "@nativescript/core": "7.0.3"
   },
   "devDependencies": {
-    "nativescript-dev-webpack": "~1.5.1",
-    "typescript": "~3.5.3"
+    "@nativescript/android": "7.0.0",
+    "@nativescript/ios": "7.0.0",
+    "@nativescript/webpack": "~3.0.0",
+    "tslint": "^6.1.2",
+    "typescript": "3.9.7"
   },
-  "scripts": {
-    "build.plugin": "cd ../src && npm i && npm run build",
-    "ci.tslint": "npm i && tslint --config '../tslint.json' 'app/**/*.ts' --exclude '**/node_modules/**'"
-  }
+  "gitHead": "d8bdf0799a219051f28f8abd7c258d2bf2fce6e1",
+  "readme": "NativeScript Application",
+  "main": "app.js"
 }

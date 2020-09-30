@@ -5,13 +5,13 @@
 *.js
 *.js.map
 *.log
-package-lock.json
 src/*.d.ts
 !src/index.d.ts
 !src/references.d.ts
 !src/scripts/*.js
+!src/webpack/*.js
 !seed-tests/*.js
-seed-tests/seed-copy/**/*.*
+seed-tests/seed-copy
 seed-tests/seed-copy-new-git-repo/**/*.*
 !demo/karma.conf.js
 !demo/app/tests/*.js
@@ -24,5 +24,3 @@ publish/src
 publish/package
 demo/report/report.html
 demo/report/stats.json
-demo/tsconfig.tns.json
-demo/webpack.config.js
