@@ -58,7 +58,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             picker.exportsWhenCompleted = true;
             picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
 
-                if (p == DKImagePickerControllerExportStatus.None) {
+                if (p === DKImagePickerControllerExportStatus.None) {
                     t.msg = DKImagePickerControllerExportStatus.None;
                     t.notify({
                         eventName: 'exportStatus',
@@ -71,7 +71,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            }
+            };
 
             if (options.maxNumberFiles > 0) {
                 picker.singleSelect = false;
@@ -166,7 +166,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             picker.exportsWhenCompleted = true;
             picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
 
-                if (p == DKImagePickerControllerExportStatus.None) {
+                if (p === DKImagePickerControllerExportStatus.None) {
                     t.msg = DKImagePickerControllerExportStatus.None;
                     t.notify({
                         eventName: 'exportStatus',
@@ -179,7 +179,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            }
+            };
 
             if (options.maxNumberFiles > 0) {
                 picker.singleSelect = false;
