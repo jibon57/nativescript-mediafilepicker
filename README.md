@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/nativescript-mediafilepicker.svg)](https://www.npmjs.com/package/nativescript-mediafilepicker)
 [![npm](https://img.shields.io/npm/dt/nativescript-mediafilepicker.svg?label=npm%20downloads)](https://www.npmjs.com/package/nativescript-mediafilepicker)
 [![npm](https://img.shields.io/npm/dm/nativescript-mediafilepicker.svg)](https://www.npmjs.com/package/nativescript-mediafilepicker)
+[![Build Status](https://github.com/jibon57/nativescript-mediafilepicker/workflows/Build%20CI/badge.svg?branch=ns-version/6)](https://github.com/jibon57/nativescript-mediafilepicker/actions?query=branch%3Ans-version%2F6++)
 
 # nativescript-mediafilepicker
 A complete file picker solution for NativeScript. You will be able to pickup any types of file. Capturing image, video & audio are supported. It's a combination features of [nativescript-imagepicker](https://github.com/NativeScript/nativescript-imagepicker) and [nativescript-camera](https://github.com/NativeScript/nativescript-camera/) plugin with some extended features using following native libaries:
