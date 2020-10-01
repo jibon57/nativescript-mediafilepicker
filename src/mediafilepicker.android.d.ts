@@ -12,6 +12,7 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     openFilePicker(params: FilePickerOptions): void;
     private performCapturing;
     private handleOnlyCaptureMode;
+    private validatePermissionsResult;
     private callIntent;
     private handleResults;
     greet(): string;
