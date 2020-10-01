@@ -17,12 +17,13 @@ const ContentValues = android.content.ContentValues;
 const Uri = android.net.Uri;
 
 declare const java, android;
+
+// A short line to execute promises in serial.
 const serial = funcs =>
     funcs.reduce((promise, func) =>
         promise.then(result => func().then(Array.prototype.concat.bind(result))), Promise.resolve([]));
 
 export class Mediafilepicker extends Observable implements MediaPickerInterface {
-
     public results;
     public msg;
     private captureFilePath;
@@ -36,7 +37,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * openImagePicker
      */
     public openImagePicker(params: ImagePickerOptions) {
-
         let intent, pickerType, options = params.android;
 
         if (options.isCaptureMood) {
@@ -61,7 +61,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * openVideoPicker
      */
     public openVideoPicker(params: VideoPickerOptions) {
-
         let intent, pickerType, options = params.android;
 
         if (options.isCaptureMood) {
@@ -96,7 +95,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * openAudioPicker
      */
     public openAudioPicker(params: AudioPickerOptions) {
-
         let intent, pickerType, options = params.android;
 
         if (options.isCaptureMood) {
@@ -127,7 +125,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * openFilePicker
      */
     public openFilePicker(params: FilePickerOptions) {
-
         let intent, pickerType, options = params.android, extensions;
 
         if (options.extensions.length > 0) {
@@ -151,10 +148,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
     }
 
     private performCapturing(type: string, options: any) {
-
         let t = this;
-
-        console.log(type);
 
         const requestPermissions = [() => RequestPermission('storage', { type: 'always' })];
         if (type === "image" || type === "video") {
@@ -164,7 +158,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
 
         serial(requestPermissions).then(res => {
-            console.log(res);
+            this.validatePermissionsResult(res);
             t.handleOnlyCaptureMode(type, options);
         }).catch(function () {
             t.msg = "Permission Error!";
@@ -176,7 +170,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
     }
 
     private handleOnlyCaptureMode(type: string, options: any) {
-
         let context = Application.android.context, t = this, intent, date, timeStamp, contentValues, file, uri;
 
         switch (type) {
@@ -268,18 +261,28 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
     }
 
+    private validatePermissionsResult(res: Array<any>) {
+        for (let i = 0; i < res.length; i++) {
+            if (typeof(res[i]) === 'object') {
+                const keys = Object.keys(res[i]);
+                for (let keysI = 0; keysI < keys.length; keysI++) {
+                    const key = keys[keysI];
+                    if (res[i][key] !== 'authorized') {
+                        throw 'Permission ' + key + ' not allowed: ' + res[i];
+                    }
+                }
+            }
+
+            if (typeof(res[i]) === 'string') {
+                if (res[i] !== 'authorized') {
+                    throw 'Permission not allowed: ' + res[i];
+                }
+            }
+        }
+    }
+
     private callIntent(intent, pickerType) {
-
         let t = this;
-
-        console.log(pickerType);
-
-        console.log(Constant.REQUEST_CODE_TAKE_IMAGE);
-        console.log(Constant.REQUEST_CODE_PICK_IMAGE);
-        console.log(Constant.REQUEST_CODE_TAKE_VIDEO);
-        console.log(Constant.REQUEST_CODE_PICK_VIDEO);
-        console.log(Constant.REQUEST_CODE_TAKE_AUDIO);
-        console.log(Constant.REQUEST_CODE_PICK_AUDIO);
 
         const requestPermissions = [() => RequestPermission('storage', { type: 'always' })];
         if (pickerType === Constant.REQUEST_CODE_TAKE_IMAGE || pickerType === Constant.REQUEST_CODE_PICK_IMAGE || pickerType === Constant.REQUEST_CODE_TAKE_VIDEO || pickerType === Constant.REQUEST_CODE_PICK_VIDEO) {
@@ -289,7 +292,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
 
         serial(requestPermissions).then(res => {
-            console.log(res);
+            this.validatePermissionsResult(res);
             Application.android.foregroundActivity.startActivityForResult(intent, pickerType);
         }).catch(function () {
             t.msg = "Permission Error!";
@@ -312,7 +315,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
      * handleResults
      */
     private handleResults(requestCode, resultCode, data) {
-
         let androidAcivity = android.app.Activity;
         let context = Application.android.context;
         let output = [];
@@ -463,7 +465,6 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         }
 
         setTimeout(() => {
-
             this.results = output;
 
             if (output.length > 0) {
@@ -488,5 +489,4 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
     public greet() {
         return "Hello, NS";
     }
-
 }
