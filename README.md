@@ -27,8 +27,8 @@ Old version (v1.X) can be found from [this branch](https://github.com/jibon57/na
 
 ## Installation (NS6)
 
-```javascript
-tns plugin add nativescript-mediafilepicker
+```
+tns plugin add nativescript-mediafilepicker@^3.0.0
 ```
 
 ## Usage (NS6) (Please check demo project for details)
