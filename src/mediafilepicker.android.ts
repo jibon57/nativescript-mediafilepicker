@@ -160,8 +160,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         serial(requestPermissions).then(res => {
             this.validatePermissionsResult(res);
             t.handleOnlyCaptureMode(type, options);
-        }).catch(function () {
-            t.msg = "Permission Error!";
+        }).catch(e => {
+            t.msg = "Permission Error! " + e;
             t.notify({
                 eventName: 'error',
                 object: t
@@ -294,8 +294,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         serial(requestPermissions).then(res => {
             this.validatePermissionsResult(res);
             Application.android.foregroundActivity.startActivityForResult(intent, pickerType);
-        }).catch(function () {
-            t.msg = "Permission Error!";
+        }).catch(e => {
+            t.msg = "Permission Error! " + e;
             t.notify({
                 eventName: 'error',
                 object: t
