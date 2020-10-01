@@ -25,13 +25,19 @@ Old version (v1.X) can be found from [this branch](https://github.com/jibon57/na
 
 **Note:** I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
 
-## Installation
+## NativeScript Version Support
+| NS Version | nativescript-mediafilepicker version | Install command | Docs |
+| ---        | ---                       | ---             | --- |
+| ^7.0.0 | ^4.0.0 | ns plugin add nativescript-mediafilepicker | This page |
+| ^6.0.0 | ^3.0.0 | tns plugin add nativescript-mediafilepicker@^3.0.0 | [Here](https://github.com/jibon57/nativescript-mediafilepicker/blob/ns-version/6/README.md) |
 
-```javascript
-tns plugin add nativescript-mediafilepicker
+## Installation (NS 7)
+
+```
+ns plugin add nativescript-mediafilepicker
 ```
 
-## Usage (Please check demo project for details)
+## Usage (NS 7) (Please check demo project for details)
 
 **Import**
 
