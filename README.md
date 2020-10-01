@@ -25,13 +25,13 @@ Old version (v1.X) can be found from [this branch](https://github.com/jibon57/na
 
 **Note:** I am not an expert of neigher iOS nor Android. So, please contribute if you think something you can do better :)
 
-## Installation
+## Installation (NS6)
 
 ```javascript
 tns plugin add nativescript-mediafilepicker
 ```
 
-## Usage (Please check demo project for details)
+## Usage (NS6) (Please check demo project for details)
 
 **Import**
 
