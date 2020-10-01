@@ -1,6 +1,6 @@
 {
     "name": "nativescript-mediafilepicker",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "NativeScript mediafilepicker plugin.",
     "main": "mediafilepicker",
     "typings": "index.d.ts",
@@ -11,21 +11,17 @@
         }
     },
     "scripts": {
-        "tsc": "tsc",
-        "build": "npm run tsc && npm run build.native",
+        "tsc": "npm i && tsc",
+        "build": "npm i && npm run tsc && npm run build.native",
         "build.native": "node scripts/build-native.js",
-        "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
-        "test.android": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
-        "test.ios": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json",
-        "plugin.tscwatch": "npm run tsc -- -w",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios --syncAllFiles --emulator",
-        "demo.android": "npm run tsc && cd ../demo && tns run android --syncAllFiles",
+        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\" --exclude \"**/typings/**\"",
+        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**' --exclude '**/platforms/**' --exclude '**/typings/**'",
+        "prepack": "npm run build.native",
+        "demo.ios": "npm i && cd ../demo && tns run ios",
+        "demo.android": "npm i && cd ../demo && tns run android",
         "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-mediafilepicker && tns plugin add ../src",
-        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json'",
-        "prepack": "npm run build.native"
+        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove @klippa/nativescript-login && tns plugin add ../src",
+        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i"
     },
     "keywords": [
         "NativeScript",
