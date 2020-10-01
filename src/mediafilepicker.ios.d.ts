@@ -1,5 +1,5 @@
-import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
+import { Observable } from "@nativescript/core";
 export declare class Mediafilepicker extends Observable implements MediaPickerInterface {
     private _mediaPickerIQDeligate;
     private _mediaPickerDocumentDeligate;
@@ -10,11 +10,11 @@ export declare class Mediafilepicker extends Observable implements MediaPickerIn
     openVideoPicker(params: VideoPickerOptions): void;
     openAudioPicker(params: AudioPickerOptions): void;
     openFilePicker(params: FilePickerOptions): void;
-    copyPHImageToAppDirectory(rawData: PHAsset, fileName: string): Promise<{}>;
-    copyPHVideoToAppDirectory(urlAsset: AVURLAsset, fileName: any): Promise<{}>;
-    convertPHImageToUIImage(rawData: PHAsset): Promise<{}>;
-    copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<{}>;
-    copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<{}>;
+    copyPHImageToAppDirectory(rawData: PHAsset, fileName: string): Promise<unknown>;
+    copyPHVideoToAppDirectory(urlAsset: AVURLAsset, fileName: any): Promise<unknown>;
+    convertPHImageToUIImage(rawData: PHAsset): Promise<unknown>;
+    copyUIImageToAppDirectory(image: UIImage, fileName: any): Promise<unknown>;
+    copyMPMediaFileToAPPDirectory(mediaItem: MPMediaItem, filename: any): Promise<unknown>;
     private presentViewController;
     greet(): string;
 }

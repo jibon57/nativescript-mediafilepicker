@@ -1,8 +1,6 @@
-import { Observable } from 'tns-core-modules/data/observable';
 import { MediaPickerInterface, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from "./mediafilepicker.common";
-import * as utils from "tns-core-modules/utils/utils";
-import * as fs from "tns-core-modules/file-system/file-system";
-import { View } from 'tns-core-modules/ui/core/view';
+import { View, Application, Observable, Utils, knownFolders, File } from "@nativescript/core";
+
 
 declare const PHAssetMediaTypeImage, PHAssetMediaTypeVideo, PHAssetMediaTypeAudio;
 const main_queue = dispatch_get_current_queue();
@@ -22,7 +20,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         this._mediaPickerIQDeligate = MediafilepickerIQMediaPickerControllerDelegate.initWithOwner(new WeakRef(this));
         this._mediaPickerDocumentDeligate = MediafilepickerDocumentPickerDelegate.initWithOwner(new WeakRef(this));
 
-        let docuPath = fs.knownFolders.documents();
+        let docuPath = knownFolders.documents();
         docuPath.getFolder("filepicker");
     }
 
@@ -37,7 +35,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         controller.delegate = this._mediaPickerIQDeligate;
 
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
-        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
+        controller.mediaTypes = Utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeImage]);
 
         if (options.isCaptureMood) {
             controller.sourceType = IQMediaPickerControllerSourceType.CameraMicrophone;
@@ -57,8 +55,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             picker.sourceType = DKImagePickerControllerSourceType.Photo;
             picker.exportsWhenCompleted = true;
             picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
-
-                if (p == DKImagePickerControllerExportStatus.None) {
+                if (p === DKImagePickerControllerExportStatus.None) {
                     t.msg = DKImagePickerControllerExportStatus.None;
                     t.notify({
                         eventName: 'exportStatus',
@@ -71,7 +68,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            }
+            };
 
             if (options.maxNumberFiles > 0) {
                 picker.singleSelect = false;
@@ -86,7 +83,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
                 let output = [];
 
-                let items: any = utils.ios.collections.nsArrayToJSArray(res);
+                let items: any = Utils.ios.collections.nsArrayToJSArray(res);
 
                 for (let i = 0; i < items.length; i++) {
                     let item: DKAsset = items[i];
@@ -132,7 +129,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
-        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
+        controller.mediaTypes = Utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeVideo]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
         if (options.isCaptureMood) {
@@ -151,7 +148,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         if (options.allowedVideoQualities) {
 
             if (options.allowedVideoQualities.length > 0) {
-                controller.allowedVideoQualities = utils.ios.collections.jsArrayToNSArray(options.allowedVideoQualities);
+                controller.allowedVideoQualities = Utils.ios.collections.jsArrayToNSArray(options.allowedVideoQualities);
             }
 
         }
@@ -165,8 +162,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
             picker.sourceType = DKImagePickerControllerSourceType.Photo;
             picker.exportsWhenCompleted = true;
             picker.exportStatusChanged = function (p: DKImagePickerControllerExportStatus) {
-
-                if (p == DKImagePickerControllerExportStatus.None) {
+                if (p === DKImagePickerControllerExportStatus.None) {
                     t.msg = DKImagePickerControllerExportStatus.None;
                     t.notify({
                         eventName: 'exportStatus',
@@ -179,7 +175,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                         object: t
                     });
                 }
-            }
+            };
 
             if (options.maxNumberFiles > 0) {
                 picker.singleSelect = false;
@@ -190,7 +186,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
                 let output = [];
 
-                let items: any = utils.ios.collections.nsArrayToJSArray(res);
+                let items: any = Utils.ios.collections.nsArrayToJSArray(res);
 
                 for (let i = 0; i < items.length; i++) {
                     let item: DKAsset = items[i];
@@ -235,7 +231,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
         let options = params.ios, t = this;
         let controller = IQMediaPickerController.alloc().init();
         controller.delegate = this._mediaPickerIQDeligate;
-        controller.mediaTypes = utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
+        controller.mediaTypes = Utils.ios.collections.jsArrayToNSArray([PHAssetMediaTypeAudio]);
         controller.sourceType = IQMediaPickerControllerSourceType.Library;
 
         if (options.isCaptureMood) {
@@ -281,7 +277,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         if (options.extensions) {
             if (options.extensions.length > 0) {
-                documentTypes = utils.ios.collections.jsArrayToNSArray(options.extensions);
+                documentTypes = Utils.ios.collections.jsArrayToNSArray(options.extensions);
             }
         }
 
@@ -303,7 +299,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         return new Promise(function (resolve, reject) {
 
-            let docuPath = fs.knownFolders.documents();
+            let docuPath = knownFolders.documents();
             let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
 
             let output = {
@@ -349,7 +345,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         return new Promise(function (resolve, reject) {
 
-            let docuPath = fs.knownFolders.documents();
+            let docuPath = knownFolders.documents();
 
             let output = {
                 status: false,
@@ -357,7 +353,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 file: ''
             };
 
-            if (fs.File.exists(docuPath.path + "/filepicker/" + fileName)) {
+            if (File.exists(docuPath.path + "/filepicker/" + fileName)) {
                 docuPath.getFile("filepicker/" + fileName).remove();
             }
 
@@ -419,10 +415,10 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
             let data = UIImageJPEGRepresentation(image, 1);
 
-            let docuPath = fs.knownFolders.documents();
+            let docuPath = knownFolders.documents();
             let targetImgeURL = docuPath.path + "/filepicker/" + fileName;
 
-            if (fs.File.exists(docuPath.path + "/filepicker/" + fileName)) {
+            if (File.exists(docuPath.path + "/filepicker/" + fileName)) {
                 docuPath.getFile("filepicker/" + fileName).remove();
             }
 
@@ -457,7 +453,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
         return new Promise(function (resolve, reject) {
 
-            let docuPath = fs.knownFolders.documents();
+            let docuPath = knownFolders.documents();
             let targetImgeURL = docuPath.path + "/filepicker/" + filename;
 
             let output = {
@@ -466,7 +462,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 file: ''
             };
 
-            if (fs.File.exists(docuPath.path + "/filepicker/" + filename)) {
+            if (File.exists(docuPath.path + "/filepicker/" + filename)) {
                 docuPath.getFile("filepicker/" + filename).remove();
             }
 
@@ -533,6 +529,7 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
 
 }
 
+@NativeClass()
 export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject implements IQMediaPickerControllerDelegate {
 
     public static ObjCProtocols = [IQMediaPickerControllerDelegate];

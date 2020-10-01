@@ -1,8 +1,5 @@
-import { Observable } from 'tns-core-modules/data/observable';
+import { Observable, Application, Button, ShowModalOptions, View } from '@nativescript/core';
 import { Mediafilepicker, ImagePickerOptions, VideoPickerOptions, AudioPickerOptions, FilePickerOptions } from 'nativescript-mediafilepicker';
-import * as app from 'tns-core-modules/application';
-import { Button } from 'tns-core-modules/ui/button/button';
-import { ShowModalOptions, View } from 'tns-core-modules/ui/core/view';
 declare const AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh, AVCaptureSessionPresetLow, kUTTypePDF, kUTTypeText;
 
 export class HelloWorldModel extends Observable {
@@ -60,7 +57,7 @@ export class HelloWorldModel extends Observable {
 
                     console.log(file);
 
-                    if (result.file && app.ios && !options.ios.isCaptureMood) {
+                    if (result.file && Application.ios && !options.ios.isCaptureMood) {
 
                         // We can copy the image to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
                         /* let fileName = file.replace(/^.*[\/]/, '');
@@ -74,7 +71,7 @@ export class HelloWorldModel extends Observable {
                         /*mediafilepicker.convertPHImageToUIImage(result.rawData).then(res => {
                             console.log(res);
                         });*/
-                    } else if (result.file && app.ios) {
+                    } else if (result.file && Application.ios) {
                         // So we have taken image & will get UIImage
 
                         // We can copy it to app directory, if need
@@ -115,7 +112,7 @@ export class HelloWorldModel extends Observable {
 
         let allowedVideoQualities = [];
 
-        if (app.ios) {
+        if (Application.ios) {
             allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  // get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
         }
 
@@ -210,7 +207,7 @@ export class HelloWorldModel extends Observable {
                     let result = results[i];
                     console.log(result);
 
-                    if (result.file && app.ios && !options.ios.isCaptureMood) {
+                    if (result.file && Application.ios && !options.ios.isCaptureMood) {
                         // We can copy the audio to app directory for futher proccess. This will create a new directory name "filepicker". So, after your work you can delete it for reducing memory use.
 
                         let fileName = "tmpFile.m4a"; // use .m4a
@@ -223,7 +220,7 @@ export class HelloWorldModel extends Observable {
                             console.dir(err);
                         });
 
-                    } else if (result.file && app.ios && options.ios.isCaptureMood) {
+                    } else if (result.file && Application.ios && options.ios.isCaptureMood) {
                         // So we have recorded file in APP directory
 
                         console.log(result.file);
@@ -251,7 +248,7 @@ export class HelloWorldModel extends Observable {
     public openCustomFilesPicker() {
         let extensions = [];
 
-        if (app.ios) {
+        if (Application.ios) {
             extensions = [kUTTypePDF, kUTTypeText]; // you can get more types from here: https://developer.apple.com/documentation/mobilecoreservices/uttype
         } else {
             extensions = ['txt', 'pdf'];
@@ -338,7 +335,7 @@ export class HelloWorldModel extends Observable {
     public videoCapture() {
         let allowedVideoQualities = [];
 
-        if (app.ios) {
+        if (Application.ios) {
             allowedVideoQualities = [AVCaptureSessionPreset1920x1080, AVCaptureSessionPresetHigh];  // get more from here: https://developer.apple.com/documentation/avfoundation/avcapturesessionpreset?language=objc
         }
 

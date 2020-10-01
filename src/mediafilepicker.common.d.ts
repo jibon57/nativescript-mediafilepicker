@@ -1,4 +1,4 @@
-import { View } from 'tns-core-modules/ui/core/view';
+import { View } from "@nativescript/core";
 export declare class MediaPickerInterface {
     openImagePicker(params: ImagePickerOptions): void;
     openVideoPicker(params: VideoPickerOptions): void;
