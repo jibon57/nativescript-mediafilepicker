@@ -700,6 +700,7 @@ export class MediafilepickerIQMediaPickerControllerDelegate extends NSObject imp
 
 }
 
+@NativeClass()
 class MediafilepickerDocumentPickerDelegate extends NSObject implements UIDocumentPickerDelegate {
 
     private _owner: WeakRef<Mediafilepicker>;
