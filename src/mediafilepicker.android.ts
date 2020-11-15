@@ -212,8 +212,8 @@ export class Mediafilepicker extends Observable implements MediaPickerInterface 
                 this.captureFilePath = mVideoPath;
 
                 contentValues = new ContentValues(1);
-                contentValues.put(MediaStore.Images.Media.DATA, mVideoPath);
-                uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                contentValues.put(MediaStore.Video.Media.DATA, mVideoPath);
+                uri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, contentValues);
                 this.captureContentUrl = uri;
 
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
