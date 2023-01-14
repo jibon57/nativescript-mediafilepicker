@@ -43,7 +43,7 @@
     "devDependencies": {
         "@nativescript/core": "~7.0.3",
         "@nativescript/types": "~7.0.3",
-        "@nativescript/webpack": "~3.0.4",
+        "@nativescript/webpack": "~5.0.12",
         "prompt": "^1.0.0",
         "rimraf": "^2.6.3",
         "rxjs": "~6.5.5",
