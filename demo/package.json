@@ -14,7 +14,7 @@
   "devDependencies": {
     "@nativescript/android": "7.0.0",
     "@nativescript/ios": "7.0.0",
-    "@nativescript/webpack": "~3.0.0",
+    "@nativescript/webpack": "~5.0.12",
     "tslint": "^6.1.2",
     "typescript": "3.9.7"
   },
